@@ -83,6 +83,7 @@ const NAV_LINKS: NavLink[] = [
   { id: 'education', label: 'Education' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
+  { id: 'gallery', label: 'Gallery' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -261,6 +262,52 @@ const SKILL_TAGS: string[] = [
   'ROS2', 'Arduino', 'Raspberry Pi', 'ESP32', 'ARM Cortex',
 ];
 
+interface GalleryItem {
+  id: number;
+  src: string;
+  caption: string;
+  category: string;
+}
+
+const GALLERY_DATA: GalleryItem[] = [
+  {
+    id: 1,
+    src: './images/profile.jpg',
+    caption: 'TECHNO 2025 Conference',
+    category: 'Events',
+  },
+  {
+    id: 2,
+    src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=800&fit=crop',
+    caption: 'Robotics Workshop Session',
+    category: 'Workshops',
+  },
+  {
+    id: 3,
+    src: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop',
+    caption: 'Circuit Board Design',
+    category: 'Projects',
+  },
+  {
+    id: 4,
+    src: 'https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&h=600&fit=crop',
+    caption: 'University of Peradeniya Campus',
+    category: 'Campus Life',
+  },
+  {
+    id: 5,
+    src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop',
+    caption: 'Blackbot - Line Following Robot',
+    category: 'Projects',
+  },
+  {
+    id: 6,
+    src: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=800&fit=crop',
+    caption: 'Apollo Exhibit at TECHNO',
+    category: 'Events',
+  },
+];
+
 // ============================================
 // UTILITY HOOKS
 // ============================================
@@ -331,9 +378,8 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ onComplete }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0f1e] transition-opacity duration-500 ${
-        isFading ? 'opacity-0' : 'opacity-100'
-      }`}
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0f1e] transition-opacity duration-500 ${isFading ? 'opacity-0' : 'opacity-100'
+        }`}
     >
       <div className="relative">
         {/* Animated gradient ring */}
@@ -344,9 +390,9 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ onComplete }) => {
         />
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <img 
-            src="./images/logo.png" 
-            alt="KRK" 
+          <img
+            src="./images/logo.png"
+            alt="KRK"
             className="w-16 h-16 object-contain rounded-full"
           />
         </div>
@@ -381,7 +427,7 @@ const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
   const initParticles = useCallback((width: number, height: number): Particle[] => {
     const particles: Particle[] = [];
     const particleCount = Math.min(80, Math.floor((width * height) / 15000));
-    
+
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
@@ -397,15 +443,15 @@ const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     const particles = particlesRef.current;
     const mouse = mouseRef.current;
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     const particleColor = isDark ? 'rgba(0, 212, 255, 0.6)' : 'rgba(0, 102, 255, 0.5)';
     const lineColor = isDark ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 102, 255, 0.1)';
 
@@ -414,7 +460,7 @@ const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
         const dx = particle.x - mouse.x;
         const dy = particle.y - mouse.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (distance < 100 && distance > 0) {
           const force = (100 - distance) / 100;
           particle.vx += (dx / distance) * force * 0.5;
@@ -517,11 +563,10 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
           ? 'bg-[#0a0f1e]/80 backdrop-blur-xl border-b border-[#00d4ff]/10'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -530,9 +575,9 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
             onClick={() => onNavigate('home')}
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            <img 
-              src="./images/logo.png" 
-              alt="KRK Logo" 
+            <img
+              src="./images/logo.png"
+              alt="KRK Logo"
               className="w-10 h-10 object-contain rounded-lg"
             />
             <span className="hidden sm:block text-lg font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">
@@ -546,11 +591,10 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
               <button
                 key={link.id}
                 onClick={() => onNavigate(link.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative ${
-                  activeSection === link.id
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative ${activeSection === link.id
                     ? 'text-[#00d4ff]'
                     : 'text-gray-300 hover:text-white'
-                }`}
+                  }`}
               >
                 {link.label}
                 {activeSection === link.id && (
@@ -603,7 +647,7 @@ const Typewriter: FC<TypewriterProps> = ({ texts, speed = 100, deleteSpeed = 50,
 
   useEffect(() => {
     const currentText = texts[textIndex];
-    
+
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (index < currentText.length) {
@@ -653,18 +697,18 @@ const AnimatedCounter: FC<AnimatedCounterProps> = ({ value, suffix = '', duratio
     if (isVisible && !hasAnimated.current) {
       hasAnimated.current = true;
       const startTime = Date.now();
-      
+
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeOut = 1 - Math.pow(1 - progress, 3);
         setCount(Math.floor(easeOut * value));
-        
+
         if (progress < 1) {
           requestAnimationFrame(animate);
         }
       };
-      
+
       requestAnimationFrame(animate);
     }
   }, [isVisible, value, duration]);
@@ -694,15 +738,14 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
       className="min-h-screen flex flex-col items-center justify-center relative px-4 pt-16"
     >
       <div
-        className={`text-center max-w-4xl mx-auto transition-all duration-700 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-        }`}
+        className={`text-center max-w-4xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}
       >
         {/* University Badge with Logo */}
         <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-[#00d4ff]/20 backdrop-blur-sm mb-8">
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/120px-University_of_Peradeniya_Crest.svg.png" 
-            alt="University of Peradeniya" 
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/120px-University_of_Peradeniya_Crest.svg.png"
+            alt="University of Peradeniya"
             className="w-8 h-8 object-contain"
           />
           <span className="text-sm text-gray-300">University of Peradeniya · Sri Lanka</span>
@@ -710,9 +753,9 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
 
         {/* Main Logo */}
         <div className="mb-8 flex justify-center">
-          <img 
-            src="./images/logo.png" 
-            alt="Kavisha Rashmika Kalhara" 
+          <img
+            src="./images/logo.png"
+            alt="Kavisha Rashmika Kalhara"
             className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-[0_0_30px_rgba(0,212,255,0.3)]"
           />
         </div>
@@ -740,12 +783,12 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </button>
-          
+
           <button className="group px-8 py-3 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-300 flex items-center gap-2">
             <span>📄</span>
             <span>Resume</span>
           </button>
-          
+
           <button
             onClick={() => onNavigate('contact')}
             className="group px-8 py-3 rounded-full border border-[#00d4ff]/50 text-[#00d4ff] font-medium hover:bg-[#00d4ff]/10 transition-all duration-300"
@@ -779,13 +822,12 @@ const StatsBar: FC = () => {
           {STATS_DATA.map((stat, index) => (
             <div
               key={stat.label}
-              className={`group relative p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-500 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-              }`}
+              className={`group relative p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+                }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#00d4ff] to-transparent opacity-50" />
-              
+
               <div className="text-3xl mb-2">{stat.icon}</div>
               <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent mb-1">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
@@ -819,27 +861,26 @@ const AboutSection: FC = () => {
         <div className="grid md:grid-cols-2 gap-12 items-start">
           {/* Left Column */}
           <div
-            className={`transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-            }`}
+            className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
           >
             <div className="space-y-4 text-gray-300 leading-relaxed">
               <p>
-                I'm a passionate Computer Engineering undergraduate at the University of Peradeniya, 
+                I'm a passionate Computer Engineering undergraduate at the University of Peradeniya,
                 driven by a fascination for how hardware and software converge to create intelligent systems.
               </p>
               <p>
-                My journey into technology began at a young age, tinkering with Arduino boards and 
-                writing my first lines of C code. Today, I'm deeply invested in robotics, embedded systems, 
+                My journey into technology began at a young age, tinkering with Arduino boards and
+                writing my first lines of C code. Today, I'm deeply invested in robotics, embedded systems,
                 and computer vision — fields where I can bring ideas to life through both code and circuits.
               </p>
               <p>
-                I believe in learning by building. Every project is an opportunity to push boundaries, 
-                whether it's optimizing a PID controller for a line-following robot or implementing a 
+                I believe in learning by building. Every project is an opportunity to push boundaries,
+                whether it's optimizing a PID controller for a line-following robot or implementing a
                 3D graphics engine from scratch.
               </p>
               <p>
-                When I'm not debugging code or soldering PCBs, you'll find me contributing to open-source 
+                When I'm not debugging code or soldering PCBs, you'll find me contributing to open-source
                 projects, mentoring junior students, or exploring the latest advancements in AI and robotics.
               </p>
             </div>
@@ -862,21 +903,20 @@ const AboutSection: FC = () => {
 
           {/* Right Column - Profile Card */}
           <div
-            className={`transition-all duration-700 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-            }`}
+            className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
           >
             <div className="relative p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              {/* Logo */}
+              {/* Profile Photo */}
               <div className="flex justify-center mb-6">
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] animate-pulse blur-md" />
                   <div className="relative w-32 h-32 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] p-1">
-                    <div className="w-full h-full rounded-full bg-[#0a0f1e] flex items-center justify-center overflow-hidden">
-                      <img 
-                        src="./images/logo.png" 
-                        alt="KRK" 
-                        className="w-24 h-24 object-contain"
+                    <div className="w-full h-full rounded-full overflow-hidden">
+                      <img
+                        src="./images/profile.jpg"
+                        alt="Kavisha Kalhara"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
@@ -891,9 +931,9 @@ const AboutSection: FC = () => {
               {/* University Badge */}
               <div className="flex justify-center mb-6">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                  <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/40px-University_of_Peradeniya_Crest.svg.png" 
-                    alt="UoP" 
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/40px-University_of_Peradeniya_Crest.svg.png"
+                    alt="UoP"
                     className="w-6 h-6 object-contain"
                   />
                   <span className="text-sm text-gray-300">University of Peradeniya</span>
@@ -946,18 +986,15 @@ const EducationTimeline: FC = () => {
           {EDUCATION_TIMELINE.map((item, index) => (
             <div
               key={index}
-              className={`relative flex items-start mb-8 md:mb-12 ${
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              }`}
+              className={`relative flex items-start mb-8 md:mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                }`}
             >
               <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] border-4 border-[#0a0f1e] z-10" />
 
               <div
-                className={`ml-12 md:ml-0 md:w-[45%] ${
-                  index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
-                } transition-all duration-700 ${
-                  isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${index % 2 === 0 ? '-translate-x-5' : 'translate-x-5'}`
-                }`}
+                className={`ml-12 md:ml-0 md:w-[45%] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
+                  } transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${index % 2 === 0 ? '-translate-x-5' : 'translate-x-5'}`
+                  }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-300">
@@ -1043,9 +1080,8 @@ const SkillsSection: FC = () => {
           {skillCategories.map((category, catIndex) => (
             <div
               key={category.id}
-              className={`p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[#00d4ff]/30 transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-              }`}
+              className={`p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[#00d4ff]/30 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+                }`}
               style={{ transitionDelay: `${catIndex * 150}ms` }}
             >
               <h3 className="text-lg font-bold text-white mb-6">{category.title}</h3>
@@ -1079,9 +1115,8 @@ interface ProjectCardProps {
 const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
   return (
     <div
-      className={`group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[#00d4ff]/30 hover:shadow-lg hover:shadow-[#00d4ff]/10 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-      }`}
+      className={`group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[#00d4ff]/30 hover:shadow-lg hover:shadow-[#00d4ff]/10 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+        }`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
       <div className="relative h-48 overflow-hidden">
@@ -1091,13 +1126,13 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] via-transparent to-transparent" />
-        
+
         {project.featured && (
           <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white">
             🔌 Featured
           </div>
         )}
-        
+
         <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium bg-white/10 backdrop-blur-sm text-white capitalize">
           {project.category === 'exhibition' ? '🚀 Exhibit' : project.category}
         </div>
@@ -1108,7 +1143,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
           {project.title}
         </h3>
         <p className="text-sm text-gray-400 mb-4 line-clamp-2">{project.description}</p>
-        
+
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tags.map((tag) => (
             <span
@@ -1130,7 +1165,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
               aria-label="View on GitHub"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
           )}
@@ -1177,11 +1212,10 @@ const ProjectsSection: FC = () => {
             <button
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeFilter === filter.id
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === filter.id
                   ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white'
                   : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white hover:border-[#00d4ff]/30'
-              }`}
+                }`}
             >
               {filter.label}
             </button>
@@ -1216,13 +1250,13 @@ const ContactSection: FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     setIsSubmitting(false);
     setSubmitStatus('success');
     setFormData({ name: '', email: '', subject: '', message: '' });
-    
+
     setTimeout(() => setSubmitStatus(null), 3000);
   };
 
@@ -1248,13 +1282,12 @@ const ContactSection: FC = () => {
 
         <div className="grid md:grid-cols-2 gap-12">
           <div
-            className={`transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-            }`}
+            className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
           >
             <p className="text-gray-300 mb-8 leading-relaxed">
-              I'm always excited to collaborate on interesting projects, discuss new ideas, 
-              or explore opportunities in robotics, embedded systems, and software development. 
+              I'm always excited to collaborate on interesting projects, discuss new ideas,
+              or explore opportunities in robotics, embedded systems, and software development.
               Feel free to reach out!
             </p>
 
@@ -1285,7 +1318,7 @@ const ContactSection: FC = () => {
                 aria-label="GitHub"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
               </a>
               <a
@@ -1296,7 +1329,7 @@ const ContactSection: FC = () => {
                 aria-label="LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
               </a>
               <a
@@ -1307,16 +1340,15 @@ const ContactSection: FC = () => {
                 aria-label="Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
             </div>
           </div>
 
           <div
-            className={`transition-all duration-700 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-            }`}
+            className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="relative">
@@ -1416,6 +1448,136 @@ const ContactSection: FC = () => {
 };
 
 // ============================================
+// COMPONENT: GallerySection
+// ============================================
+
+const GallerySection: FC = () => {
+  const [ref, isVisible] = useIntersectionObserver();
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  const categories = ['All', ...Array.from(new Set(GALLERY_DATA.map(item => item.category)))];
+
+  const filteredImages = activeFilter === 'All'
+    ? GALLERY_DATA
+    : GALLERY_DATA.filter(item => item.category === activeFilter);
+
+  return (
+    <section id="gallery" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+            Photo <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Gallery</span>
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto mb-4" />
+          <p className="text-gray-400 max-w-lg mx-auto">Featured moments from events, projects, and campus life</p>
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveFilter(cat)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === cat
+                  ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25'
+                  : 'bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-[#00d4ff]/30'
+                }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Masonry Grid */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+          {filteredImages.map((item, index) => (
+            <div
+              key={item.id}
+              className={`break-inside-avoid group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+              onClick={() => setSelectedImage(item)}
+            >
+              {/* Image */}
+              <img
+                src={item.src}
+                alt={item.caption}
+                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] via-[#0a0f1e]/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 w-fit mb-2">
+                  {item.category}
+                </span>
+                <p className="text-white font-semibold text-lg">{item.caption}</p>
+              </div>
+
+              {/* Glow Border on Hover */}
+              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#00d4ff]/40 transition-all duration-300 pointer-events-none" />
+
+              {/* Zoom Icon */}
+              <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#0a0f1e]/70 backdrop-blur-sm border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-50">
+                <svg className="w-5 h-5 text-[#00d4ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-[#0a0f1e]/90 backdrop-blur-xl" style={{ animation: 'fadeIn 0.3s ease-out' }} />
+
+          {/* Content */}
+          <div
+            className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+            style={{ animation: 'scaleIn 0.3s ease-out' }}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all z-10"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Image */}
+            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-[#00d4ff]/10">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.caption}
+                className="max-w-full max-h-[75vh] object-contain"
+              />
+            </div>
+
+            {/* Caption */}
+            <div className="mt-4 text-center">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 mb-2">
+                {selectedImage.category}
+              </span>
+              <p className="text-white text-lg font-semibold">{selectedImage.caption}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+// ============================================
 // COMPONENT: Footer
 // ============================================
 
@@ -1425,15 +1587,15 @@ const Footer: FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center">
           <div className="flex justify-center mb-4">
-            <img 
-              src="./images/logo.png" 
-              alt="KRK" 
+            <img
+              src="./images/logo.png"
+              alt="KRK"
               className="w-12 h-12 object-contain rounded-lg"
             />
           </div>
-          
+
           <p className="text-gray-400 mb-6">Building the future, one line of code at a time.</p>
-          
+
           <div className="flex justify-center gap-4 mb-8">
             <a
               href="https://github.com"
@@ -1443,7 +1605,7 @@ const Footer: FC = () => {
               aria-label="GitHub"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
             <a
@@ -1454,7 +1616,7 @@ const Footer: FC = () => {
               aria-label="LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
               </svg>
             </a>
             <a
@@ -1465,11 +1627,11 @@ const Footer: FC = () => {
               aria-label="Twitter"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
             </a>
           </div>
-          
+
           <p className="text-sm text-gray-500">
             © {new Date().getFullYear()} Kavisha Rashmika Kalhara. All rights reserved.
           </p>
@@ -1494,9 +1656,8 @@ const ScrollToTop: FC<ScrollToTopProps> = ({ onNavigate }) => {
   return (
     <button
       onClick={() => onNavigate('home')}
-      className={`fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25 transition-all duration-300 flex items-center justify-center z-40 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-      }`}
+      className={`fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25 transition-all duration-300 flex items-center justify-center z-40 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
       aria-label="Scroll to top"
     >
       <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1549,7 +1710,7 @@ const App: FC = () => {
     link.rel = 'stylesheet';
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
     document.head.appendChild(link);
-    
+
     return () => {
       document.head.removeChild(link);
     };
@@ -1563,7 +1724,7 @@ const App: FC = () => {
     <div className={`${isDark ? 'dark' : ''}`}>
       <div className="min-h-screen bg-[#0a0f1e] text-white transition-colors duration-300">
         <ParticleCanvas isDark={isDark} />
-        
+
         <Navbar
           isDark={isDark}
           toggleTheme={toggleTheme}
@@ -1578,6 +1739,7 @@ const App: FC = () => {
           <EducationTimeline />
           <SkillsSection />
           <ProjectsSection />
+          <GallerySection />
           <ContactSection />
         </main>
 
