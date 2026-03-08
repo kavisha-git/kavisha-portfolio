@@ -378,33 +378,35 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ onComplete }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0f1e] transition-opacity duration-500 ${isFading ? 'opacity-0' : 'opacity-100'
-        }`}
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center transition-opacity duration-500`}
+      style={{ background: 'var(--bg-primary)' }}
     >
-      <div className="relative">
-        {/* Animated gradient ring */}
-        <div className="w-32 h-32 rounded-full border-4 border-transparent border-t-[#00d4ff] border-r-[#0066ff] animate-spin" />
-        <div
-          className="absolute inset-0 w-32 h-32 rounded-full border-4 border-transparent border-b-[#00d4ff] border-l-[#0066ff] animate-spin"
-          style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}
-        />
-        {/* Logo */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            src="./images/logo.png"
-            alt="KRK"
-            className="w-16 h-16 object-contain rounded-full"
+      <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center transition-opacity duration-500 ${isFading ? 'opacity-0' : 'opacity-100'}`}>
+        <div className="relative">
+          {/* Animated gradient ring */}
+          <div className="w-32 h-32 rounded-full border-4 border-transparent border-t-[#00d4ff] border-r-[#0066ff] animate-spin" />
+          <div
+            className="absolute inset-0 w-32 h-32 rounded-full border-4 border-transparent border-b-[#00d4ff] border-l-[#0066ff] animate-spin"
+            style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}
+          />
+          {/* Logo */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img
+              src="./images/logo.png"
+              alt="KRK"
+              className="w-16 h-16 object-contain rounded-full"
+            />
+          </div>
+        </div>
+        <p className="mt-8 text-sm tracking-widest uppercase animate-pulse" style={{ color: 'var(--text-muted)' }}>
+          Initialising Portfolio…
+        </p>
+        <div className="mt-4 w-48 h-1 rounded-full overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+          <div
+            className="h-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] transition-all duration-100"
+            style={{ width: `${progress}%` }}
           />
         </div>
-      </div>
-      <p className="mt-8 text-gray-400 text-sm tracking-widest uppercase animate-pulse">
-        Initialising Portfolio…
-      </p>
-      <div className="mt-4 w-48 h-1 bg-gray-800 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] transition-all duration-100"
-          style={{ width: `${progress}%` }}
-        />
       </div>
     </div>
   );
@@ -560,13 +562,15 @@ interface NavbarProps {
 const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigate }) => {
   const scrollY = useScrollPosition();
   const isScrolled = scrollY > 80;
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-          ? 'bg-[#0a0f1e]/80 backdrop-blur-xl border-b border-[#00d4ff]/10'
-          : 'bg-transparent'
+        ? 'backdrop-blur-xl border-b'
+        : 'bg-transparent'
         }`}
+      style={isScrolled ? { background: 'var(--bg-nav)', borderColor: 'var(--border-color)' } : {}}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -592,9 +596,10 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
                 key={link.id}
                 onClick={() => onNavigate(link.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative ${activeSection === link.id
-                    ? 'text-[#00d4ff]'
-                    : 'text-gray-300 hover:text-white'
+                  ? 'text-[#00d4ff]'
+                  : ''
                   }`}
+                style={activeSection !== link.id ? { color: 'var(--text-muted)' } : {}}
               >
                 {link.label}
                 {activeSection === link.id && (
@@ -605,10 +610,11 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
+              className="p-2.5 rounded-xl transition-all duration-300 hover:scale-110"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
               aria-label="Toggle theme"
             >
               {isDark ? (
@@ -621,8 +627,48 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
                 </svg>
               )}
             </button>
+
+            {/* Mobile Hamburger */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden p-2.5 rounded-xl transition-all duration-300"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+              aria-label="Toggle menu"
+            >
+              <svg className="w-5 h-5" style={{ color: 'var(--text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {mobileOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Dropdown */}
+        {mobileOpen && (
+          <div
+            className="md:hidden py-4 border-t backdrop-blur-xl rounded-b-2xl"
+            style={{ borderColor: 'var(--border-color)', background: 'var(--bg-nav)' }}
+          >
+            <div className="flex flex-col space-y-1">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => { onNavigate(link.id); setMobileOpen(false); }}
+                  className={`px-4 py-3 rounded-xl text-sm font-medium text-left transition-all duration-300 ${activeSection === link.id
+                    ? 'text-[#00d4ff] bg-[#00d4ff]/10'
+                    : ''
+                    }`}
+                  style={activeSection !== link.id ? { color: 'var(--text-secondary)' } : {}}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
@@ -742,13 +788,16 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
           }`}
       >
         {/* University Badge with Logo */}
-        <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-[#00d4ff]/20 backdrop-blur-sm mb-8">
+        <div
+          className="inline-flex items-center gap-3 px-5 py-3 rounded-full backdrop-blur-sm mb-8"
+          style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+        >
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/120px-University_of_Peradeniya_Crest.svg.png"
             alt="University of Peradeniya"
             className="w-8 h-8 object-contain"
           />
-          <span className="text-sm text-gray-300">University of Peradeniya · Sri Lanka</span>
+          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>University of Peradeniya · Sri Lanka</span>
         </div>
 
         {/* Main Logo */}
@@ -768,7 +817,7 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
         </h1>
 
         {/* Typewriter */}
-        <p className="text-lg sm:text-xl text-gray-400 mb-10 h-8">
+        <p className="text-lg sm:text-xl mb-10 h-8" style={{ color: 'var(--text-muted)' }}>
           <Typewriter texts={TYPEWRITER_ROLES} speed={80} deleteSpeed={40} pause={1500} />
         </p>
 
@@ -784,7 +833,10 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
             </svg>
           </button>
 
-          <button className="group px-8 py-3 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-300 flex items-center gap-2">
+          <button
+            className="group px-8 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2"
+            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+          >
             <span>📄</span>
             <span>Resume</span>
           </button>
@@ -822,17 +874,22 @@ const StatsBar: FC = () => {
           {STATS_DATA.map((stat, index) => (
             <div
               key={stat.label}
-              className={`group relative p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              className={`group relative p-6 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:scale-[1.03] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
                 }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              style={{
+                transitionDelay: `${index * 100}ms`,
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
+                boxShadow: '0 4px 24px var(--shadow-color)',
+              }}
             >
-              <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#00d4ff] to-transparent opacity-50" />
+              <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#00d4ff] to-[#0066ff] opacity-50" />
 
               <div className="text-3xl mb-2">{stat.icon}</div>
               <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent mb-1">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
             </div>
           ))}
         </div>
@@ -852,7 +909,7 @@ const AboutSection: FC = () => {
     <section id="about" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
             About <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Me</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
@@ -864,7 +921,7 @@ const AboutSection: FC = () => {
             className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
               }`}
           >
-            <div className="space-y-4 text-gray-300 leading-relaxed">
+            <div className="space-y-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               <p>
                 I'm a passionate Computer Engineering undergraduate at the University of Peradeniya,
                 driven by a fascination for how hardware and software converge to create intelligent systems.
@@ -887,12 +944,13 @@ const AboutSection: FC = () => {
 
             {/* Skill Tags */}
             <div className="mt-8">
-              <h3 className="text-sm font-medium text-gray-400 mb-4 uppercase tracking-wider">Expertise</h3>
+              <h3 className="text-sm font-medium mb-4 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Expertise</h3>
               <div className="flex flex-wrap gap-2">
                 {SKILL_TAGS.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 rounded-full text-sm bg-white/5 border border-white/10 text-gray-300 hover:border-[#00d4ff]/50 hover:text-[#00d4ff] transition-all duration-300 cursor-default"
+                    className="px-3 py-1 rounded-full text-sm hover:border-[#00d4ff]/50 hover:text-[#00d4ff] transition-all duration-300 cursor-default"
+                    style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
                   >
                     {tag}
                   </span>
@@ -906,7 +964,10 @@ const AboutSection: FC = () => {
             className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
               }`}
           >
-            <div className="relative p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+            <div
+              className="relative p-8 rounded-2xl backdrop-blur-sm"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 8px 32px var(--shadow-color)' }}
+            >
               {/* Profile Photo */}
               <div className="flex justify-center mb-6">
                 <div className="relative">
@@ -924,36 +985,37 @@ const AboutSection: FC = () => {
               </div>
 
               <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-white mb-1">Kavisha Kalhara</h3>
-                <p className="text-gray-400 text-sm">Computer Engineering Undergraduate</p>
+                <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Kavisha Kalhara</h3>
+                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Computer Engineering Undergraduate</p>
               </div>
 
               {/* University Badge */}
               <div className="flex justify-center mb-6">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                <div
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+                >
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/40px-University_of_Peradeniya_Crest.svg.png"
                     alt="UoP"
                     className="w-6 h-6 object-contain"
                   />
-                  <span className="text-sm text-gray-300">University of Peradeniya</span>
+                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>University of Peradeniya</span>
                 </div>
               </div>
 
               {/* Quick Info Pills */}
               <div className="flex flex-wrap justify-center gap-3">
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                  <span>📍</span>
-                  <span className="text-sm text-gray-300">Sri Lanka</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                  <span>🎓</span>
-                  <span className="text-sm text-gray-300">Year 1</span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                  <span>💼</span>
-                  <span className="text-sm text-gray-300">Open to Internships</span>
-                </div>
+                {[{ icon: '📍', text: 'Sri Lanka' }, { icon: '🎓', text: 'Year 1' }, { icon: '💼', text: 'Open to Internships' }].map((pill) => (
+                  <div
+                    key={pill.text}
+                    className="flex items-center gap-2 px-4 py-2 rounded-full"
+                    style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+                  >
+                    <span>{pill.icon}</span>
+                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{pill.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -974,7 +1036,7 @@ const EducationTimeline: FC = () => {
     <section id="education" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
             Education & <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Journey</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
@@ -989,7 +1051,7 @@ const EducationTimeline: FC = () => {
               className={`relative flex items-start mb-8 md:mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
             >
-              <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] border-4 border-[#0a0f1e] z-10" />
+              <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] z-10" style={{ border: '4px solid var(--bg-primary)' }} />
 
               <div
                 className={`ml-12 md:ml-0 md:w-[45%] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
@@ -997,13 +1059,16 @@ const EducationTimeline: FC = () => {
                   }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-300">
+                <div
+                  className="p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-[1.02]"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 4px 24px var(--shadow-color)' }}
+                >
                   <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#00d4ff]/20 to-[#0066ff]/20 text-[#00d4ff] mb-3">
                     {item.date}
                   </span>
-                  <h3 className="text-lg font-bold text-white mb-1">{item.title}</h3>
+                  <h3 className="text-lg font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
                   <p className="text-sm text-[#00b4d8] mb-2">{item.institution}</p>
-                  <p className="text-sm text-gray-400">{item.description}</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{item.description}</p>
                 </div>
               </div>
             </div>
@@ -1213,8 +1278,8 @@ const ProjectsSection: FC = () => {
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === filter.id
-                  ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white'
-                  : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white hover:border-[#00d4ff]/30'
+                ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white'
+                : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white hover:border-[#00d4ff]/30'
                 }`}
             >
               {filter.label}
@@ -1480,8 +1545,8 @@ const GallerySection: FC = () => {
               key={cat}
               onClick={() => setActiveFilter(cat)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === cat
-                  ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25'
-                  : 'bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-[#00d4ff]/30'
+                ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25'
+                : 'bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-[#00d4ff]/30'
                 }`}
             >
               {cat}
@@ -1583,7 +1648,7 @@ const GallerySection: FC = () => {
 
 const Footer: FC = () => {
   return (
-    <footer className="py-12 px-4 border-t border-white/10">
+    <footer className="py-12 px-4" style={{ borderTop: '1px solid var(--border-color)' }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center">
           <div className="flex justify-center mb-4">
@@ -1594,14 +1659,15 @@ const Footer: FC = () => {
             />
           </div>
 
-          <p className="text-gray-400 mb-6">Building the future, one line of code at a time.</p>
+          <p className="mb-6" style={{ color: 'var(--text-muted)' }}>Building the future, one line of code at a time.</p>
 
           <div className="flex justify-center gap-4 mb-8">
             <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:text-[#00d4ff]"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
               aria-label="GitHub"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1612,7 +1678,8 @@ const Footer: FC = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:text-[#00d4ff]"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
               aria-label="LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1623,7 +1690,8 @@ const Footer: FC = () => {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:text-[#00d4ff]"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
               aria-label="Twitter"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1632,7 +1700,7 @@ const Footer: FC = () => {
             </a>
           </div>
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
             © {new Date().getFullYear()} Kavisha Rashmika Kalhara. All rights reserved.
           </p>
         </div>
@@ -1721,8 +1789,8 @@ const App: FC = () => {
   }
 
   return (
-    <div className={`${isDark ? 'dark' : ''}`}>
-      <div className="min-h-screen bg-[#0a0f1e] text-white transition-colors duration-300">
+    <div data-theme={isDark ? 'dark' : 'light'}>
+      <div className="min-h-screen transition-colors duration-500" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
         <ParticleCanvas isDark={isDark} />
 
         <Navbar
