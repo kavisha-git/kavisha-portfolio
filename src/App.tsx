@@ -345,7 +345,7 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Logo */}
         <div className="absolute inset-0 flex items-center justify-center">
           <img 
-            src="/images/logo.png" 
+            src="./images/logo.png" 
             alt="KRK" 
             className="w-16 h-16 object-contain rounded-full"
           />
@@ -531,7 +531,7 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
             className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
             <img 
-              src="/images/logo.png" 
+              src="./images/logo.png" 
               alt="KRK Logo" 
               className="w-10 h-10 object-contain rounded-lg"
             />
@@ -711,7 +711,7 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
         {/* Main Logo */}
         <div className="mb-8 flex justify-center">
           <img 
-            src="/images/logo.png" 
+            src="./images/logo.png" 
             alt="Kavisha Rashmika Kalhara" 
             className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-[0_0_30px_rgba(0,212,255,0.3)]"
           />
@@ -874,7 +874,7 @@ const AboutSection: FC = () => {
                   <div className="relative w-32 h-32 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] p-1">
                     <div className="w-full h-full rounded-full bg-[#0a0f1e] flex items-center justify-center overflow-hidden">
                       <img 
-                        src="/images/logo.png" 
+                        src="./images/logo.png" 
                         alt="KRK" 
                         className="w-24 h-24 object-contain"
                       />
@@ -1426,7 +1426,7 @@ const Footer: FC = () => {
         <div className="text-center">
           <div className="flex justify-center mb-4">
             <img 
-              src="/images/logo.png" 
+              src="./images/logo.png" 
               alt="KRK" 
               className="w-12 h-12 object-contain rounded-lg"
             />
