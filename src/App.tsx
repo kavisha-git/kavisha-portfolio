@@ -1105,10 +1105,10 @@ const SkillBar: FC<SkillBarProps> = ({ name, percentage, delay, isVisible }) => 
   return (
     <div className="mb-4">
       <div className="flex justify-between mb-2">
-        <span className="text-sm text-gray-300">{name}</span>
+        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{name}</span>
         <span className="text-sm text-[#00d4ff]">{percentage}%</span>
       </div>
-      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-card)' }}>
         <div
           className="h-full rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] transition-all duration-1000 ease-out"
           style={{ width: `${width}%`, transitionDelay: `${delay}ms` }}
@@ -1145,11 +1145,11 @@ const SkillsSection: FC = () => {
           {skillCategories.map((category, catIndex) => (
             <div
               key={category.id}
-              className={`p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-[#00d4ff]/30 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              className={`p-6 rounded-2xl backdrop-blur-sm transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
                 }`}
-              style={{ transitionDelay: `${catIndex * 150}ms` }}
+              style={{ transitionDelay: `${catIndex * 150}ms`, background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
             >
-              <h3 className="text-lg font-bold text-white mb-6">{category.title}</h3>
+              <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--text-primary)' }}>{category.title}</h3>
               {SKILLS_DATA[category.id].map((skill, skillIndex) => (
                 <SkillBar
                   key={skill.name}
@@ -1180,9 +1180,9 @@ interface ProjectCardProps {
 const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
   return (
     <div
-      className={`group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[#00d4ff]/30 hover:shadow-lg hover:shadow-[#00d4ff]/10 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+      className={`group relative rounded-2xl overflow-hidden backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lg ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
         }`}
-      style={{ transitionDelay: `${index * 100}ms` }}
+      style={{ transitionDelay: `${index * 100}ms`, background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
     >
       <div className="relative h-48 overflow-hidden">
         <img
@@ -1190,7 +1190,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
           alt={project.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t to-transparent" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }} />
 
         {project.featured && (
           <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white">
@@ -1198,22 +1198,23 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
           </div>
         )}
 
-        <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium bg-white/10 backdrop-blur-sm text-white capitalize">
+        <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm capitalize" style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>
           {project.category === 'exhibition' ? '🚀 Exhibit' : project.category}
         </div>
       </div>
 
       <div className="p-6">
-        <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#00d4ff] transition-colors">
+        <h3 className="text-lg font-bold mb-2 transition-colors" style={{ color: 'var(--text-primary)' }}>
           {project.title}
         </h3>
-        <p className="text-sm text-gray-400 mb-4 line-clamp-2">{project.description}</p>
+        <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{project.description}</p>
 
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 rounded-md text-xs bg-white/5 text-gray-400"
+              className="px-2 py-1 rounded-md text-xs"
+              style={{ background: 'var(--badge-bg)', color: 'var(--text-muted)' }}
             >
               {tag}
             </span>
@@ -1226,7 +1227,8 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+              className="flex items-center justify-center w-10 h-10 rounded-lg transition-all"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
               aria-label="View on GitHub"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1235,7 +1237,8 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
             </a>
           )}
           <button
-            className="flex items-center justify-center w-10 h-10 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+            className="flex items-center justify-center w-10 h-10 rounded-lg transition-all"
+            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
             aria-label="View details"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1279,8 +1282,9 @@ const ProjectsSection: FC = () => {
               onClick={() => setActiveFilter(filter.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === filter.id
                 ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white'
-                : 'bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white hover:border-[#00d4ff]/30'
+                : ''
                 }`}
+              style={activeFilter !== filter.id ? { background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' } : {}}
             >
               {filter.label}
             </button>
@@ -1350,7 +1354,7 @@ const ContactSection: FC = () => {
             className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
               }`}
           >
-            <p className="text-gray-300 mb-8 leading-relaxed">
+            <p className="mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               I'm always excited to collaborate on interesting projects, discuss new ideas,
               or explore opportunities in robotics, embedded systems, and software development.
               Feel free to reach out!
@@ -1363,12 +1367,13 @@ const ContactSection: FC = () => {
                   href={info.href}
                   target={info.href.startsWith('http') ? '_blank' : undefined}
                   rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all duration-300"
+                  className="flex items-center gap-4 p-4 rounded-xl transition-all duration-300"
+                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
                 >
                   <span className="text-2xl">{info.icon}</span>
                   <div>
-                    <p className="text-sm text-gray-400">{info.label}</p>
-                    <p className="text-white">{info.value}</p>
+                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{info.label}</p>
+                    <p style={{ color: 'var(--text-primary)' }}>{info.value}</p>
                   </div>
                 </a>
               ))}
@@ -1379,7 +1384,8 @@ const ContactSection: FC = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
+                style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
                 aria-label="GitHub"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1390,7 +1396,8 @@ const ContactSection: FC = () => {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
+                style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
                 aria-label="LinkedIn"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1401,7 +1408,8 @@ const ContactSection: FC = () => {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 hover:border-[#00d4ff]/30 transition-all"
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
+                style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
                 aria-label="Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -1423,10 +1431,11 @@ const ContactSection: FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="peer w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-transparent focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors"
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
                   placeholder="Name"
                 />
-                <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-[#00d4ff] peer-focus:bg-[#0a0f1e] peer-focus:px-1 pointer-events-none">
+                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
                   Name
                 </label>
               </div>
@@ -1438,10 +1447,11 @@ const ContactSection: FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="peer w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-transparent focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors"
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
                   placeholder="Email"
                 />
-                <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-[#00d4ff] peer-focus:bg-[#0a0f1e] peer-focus:px-1 pointer-events-none">
+                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
                   Email
                 </label>
               </div>
@@ -1453,10 +1463,11 @@ const ContactSection: FC = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="peer w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-transparent focus:outline-none focus:border-[#00d4ff]/50 transition-colors"
+                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors"
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
                   placeholder="Subject"
                 />
-                <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-[#00d4ff] peer-focus:bg-[#0a0f1e] peer-focus:px-1 pointer-events-none">
+                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
                   Subject
                 </label>
               </div>
@@ -1468,10 +1479,11 @@ const ContactSection: FC = () => {
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="peer w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-transparent focus:outline-none focus:border-[#00d4ff]/50 transition-colors resize-none"
+                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors resize-none"
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
                   placeholder="Message"
                 />
-                <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-[#00d4ff] peer-focus:bg-[#0a0f1e] peer-focus:px-1 pointer-events-none">
+                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
                   Message
                 </label>
               </div>
@@ -1535,7 +1547,7 @@ const GallerySection: FC = () => {
             Photo <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Gallery</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto mb-4" />
-          <p className="text-gray-400 max-w-lg mx-auto">Featured moments from events, projects, and campus life</p>
+          <p className="max-w-lg mx-auto" style={{ color: 'var(--text-muted)' }}>Featured moments from events, projects, and campus life</p>
         </div>
 
         {/* Category Filters */}
@@ -1546,8 +1558,9 @@ const GallerySection: FC = () => {
               onClick={() => setActiveFilter(cat)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === cat
                 ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25'
-                : 'bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:border-[#00d4ff]/30'
+                : ''
                 }`}
+              style={activeFilter !== cat ? { background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' } : {}}
             >
               {cat}
             </button>
@@ -1573,18 +1586,18 @@ const GallerySection: FC = () => {
               />
 
               {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] via-[#0a0f1e]/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5" style={{ background: 'linear-gradient(to top, var(--bg-primary), rgba(0,0,0,0.2), transparent)' }}>
                 <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 w-fit mb-2">
                   {item.category}
                 </span>
-                <p className="text-white font-semibold text-lg">{item.caption}</p>
+                <p className="font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>{item.caption}</p>
               </div>
 
               {/* Glow Border on Hover */}
               <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#00d4ff]/40 transition-all duration-300 pointer-events-none" />
 
               {/* Zoom Icon */}
-              <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[#0a0f1e]/70 backdrop-blur-sm border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-50">
+              <div className="absolute top-4 right-4 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-50" style={{ background: 'var(--overlay-bg)', border: '1px solid var(--border-color)' }}>
                 <svg className="w-5 h-5 text-[#00d4ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                 </svg>
@@ -1601,7 +1614,7 @@ const GallerySection: FC = () => {
           onClick={() => setSelectedImage(null)}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-[#0a0f1e]/90 backdrop-blur-xl" style={{ animation: 'fadeIn 0.3s ease-out' }} />
+          <div className="absolute inset-0 backdrop-blur-xl" style={{ background: 'var(--overlay-bg)', animation: 'fadeIn 0.3s ease-out' }} />
 
           {/* Content */}
           <div
@@ -1612,7 +1625,8 @@ const GallerySection: FC = () => {
             {/* Close Button */}
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all z-10"
+              className="absolute -top-12 right-0 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center transition-all z-10"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

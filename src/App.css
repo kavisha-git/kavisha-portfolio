@@ -77,6 +77,21 @@ html {
   color: white;
 }
 
+[data-theme="light"] ::selection {
+  background: rgba(0, 102, 255, 0.2);
+  color: #0f172a;
+}
+
+/* Floating labels for contact form */
+.floating-label {
+  transition: all 0.2s ease;
+}
+
+.peer:focus~.floating-label {
+  color: var(--accent-primary);
+  background: var(--bg-primary);
+}
+
 /* Line clamp */
 .line-clamp-2 {
   display: -webkit-box;
