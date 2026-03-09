@@ -1768,23 +1768,27 @@ const App: FC = () => {
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 120; // offset for navbar height
+      let currentSection = 'home';
+
+      NAV_LINKS.forEach((link) => {
+        const element = document.getElementById(link.id);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            currentSection = link.id;
           }
-        });
-      },
-      { threshold: 0.3 }
-    );
+        }
+      });
 
-    NAV_LINKS.forEach((link) => {
-      const element = document.getElementById(link.id);
-      if (element) observer.observe(element);
-    });
+      setActiveSection(currentSection);
+    };
 
-    return () => observer.disconnect();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // run once on mount
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
