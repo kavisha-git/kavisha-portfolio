@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { FC, FormEvent, ChangeEvent } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import './App.css';
 
 // ============================================
@@ -424,7 +425,6 @@ const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef<MousePosition>({ x: null, y: null });
-  const animationRef = useRef<number>(0);
 
   const initParticles = useCallback((width: number, height: number): Particle[] => {
     const particles: Particle[] = [];
@@ -442,67 +442,77 @@ const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
     return particles;
   }, []);
 
-  const animate = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+  useEffect(() => {
+    let animationFrameId: number;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const animate = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
 
-    const particles = particlesRef.current;
-    const mouse = mouseRef.current;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const particles = particlesRef.current;
+      const mouse = mouseRef.current;
 
-    const particleColor = isDark ? 'rgba(0, 212, 255, 0.6)' : 'rgba(0, 102, 255, 0.5)';
-    const lineColor = isDark ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 102, 255, 0.1)';
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    particles.forEach((particle, i) => {
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = particle.x - mouse.x;
-        const dy = particle.y - mouse.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+      const particleColor = isDark ? 'rgba(0, 212, 255, 0.6)' : 'rgba(0, 102, 255, 0.5)';
+      const lineColor = isDark ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 102, 255, 0.1)';
 
-        if (distance < 100 && distance > 0) {
-          const force = (100 - distance) / 100;
-          particle.vx += (dx / distance) * force * 0.5;
-          particle.vy += (dy / distance) * force * 0.5;
+      particles.forEach((particle, i) => {
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = particle.x - mouse.x;
+          const dy = particle.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100 && distance > 0) {
+            const force = (100 - distance) / 100;
+            particle.vx += (dx / distance) * force * 0.5;
+            particle.vy += (dy / distance) * force * 0.5;
+          }
         }
-      }
 
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-      particle.vx *= 0.99;
-      particle.vy *= 0.99;
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.vx *= 0.99;
+        particle.vy *= 0.99;
 
-      if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-      if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
 
-      particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-      particle.y = Math.max(0, Math.min(canvas.height, particle.y));
+        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
+        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
 
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-      ctx.fillStyle = particleColor;
-      ctx.fill();
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+        ctx.fillStyle = particleColor;
+        ctx.fill();
 
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particle.x - particles[j].x;
-        const dy = particle.y - particles[j].y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particle.x - particles[j].x;
+          const dy = particle.y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particle.x, particle.y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = lineColor;
-          ctx.lineWidth = 1 - distance / 120;
-          ctx.stroke();
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = 1 - distance / 120;
+            ctx.stroke();
+          }
         }
-      }
-    });
+      });
 
-    animationRef.current = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+       cancelAnimationFrame(animationFrameId);
+    };
   }, [isDark]);
 
   useEffect(() => {
@@ -529,15 +539,12 @@ const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
 
-    animationRef.current = requestAnimationFrame(animate);
-
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
-      cancelAnimationFrame(animationRef.current);
     };
-  }, [animate, initParticles]);
+  }, [initParticles]);
 
   return (
     <canvas
@@ -775,17 +782,21 @@ interface HeroSectionProps {
 }
 
 const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
-  const [ref, isVisible] = useIntersectionObserver();
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   return (
     <section
       id="home"
-      ref={ref as React.RefObject<HTMLElement>}
-      className="min-h-screen flex flex-col items-center justify-center relative px-4 pt-16"
+      className="min-h-screen flex flex-col items-center justify-center relative px-4 pt-16 overflow-hidden"
     >
-      <div
-        className={`text-center max-w-4xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-          }`}
+      <motion.div
+        style={{ y: y1, opacity }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="text-center max-w-4xl mx-auto z-10"
       >
         {/* University Badge with Logo */}
         <div
@@ -848,14 +859,24 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
             Contact Me
           </button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <svg className="w-6 h-6 text-[#00d4ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+        >
+          <svg className="w-8 h-8 text-[#00d4ff] opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
@@ -865,22 +886,21 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
 // ============================================
 
 const StatsBar: FC = () => {
-  const [ref, isVisible] = useIntersectionObserver();
-
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="py-16 px-4">
+    <section className="py-16 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {STATS_DATA.map((stat, index) => (
-            <div
+            <motion.div
               key={stat.label}
-              className={`group relative p-6 rounded-2xl backdrop-blur-sm transition-all duration-500 hover:scale-[1.03] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-                }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{ scale: 1.05, translateY: -5 }}
+              className="group relative p-6 rounded-2xl glass overflow-hidden"
               style={{
-                transitionDelay: `${index * 100}ms`,
-                background: 'var(--bg-card)',
-                border: '1px solid var(--border-color)',
-                boxShadow: '0 4px 24px var(--shadow-color)',
+                boxShadow: '0 8px 32px var(--shadow-color)',
               }}
             >
               <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#00d4ff] to-[#0066ff] opacity-50" />
@@ -889,8 +909,8 @@ const StatsBar: FC = () => {
               <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent mb-1">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
-            </div>
+              <div className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -903,23 +923,28 @@ const StatsBar: FC = () => {
 // ============================================
 
 const AboutSection: FC = () => {
-  const [ref, isVisible] = useIntersectionObserver();
-
   return (
-    <section id="about" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-            About <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Me</span>
+    <section id="about" className="py-24 px-4 relative">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] to-[#0066ff]">Me</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
-        </div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Left Column */}
-          <div
-            className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-              }`}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
             <div className="space-y-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               <p>
@@ -957,16 +982,18 @@ const AboutSection: FC = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column - Profile Card */}
-          <div
-            className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-              }`}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div
-              className="relative p-8 rounded-2xl backdrop-blur-sm"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 8px 32px var(--shadow-color)' }}
+              className="relative p-8 rounded-3xl glass"
+              style={{ boxShadow: '0 20px 40px var(--shadow-color)' }}
             >
               {/* Profile Photo */}
               <div className="flex justify-center mb-6">
@@ -1018,7 +1045,7 @@ const AboutSection: FC = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1030,17 +1057,20 @@ const AboutSection: FC = () => {
 // ============================================
 
 const EducationTimeline: FC = () => {
-  const [ref, isVisible] = useIntersectionObserver();
-
   return (
-    <section id="education" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+    <section id="education" className="py-24 px-4 relative">
+      <div className="max-w-4xl mx-auto relative z-10">
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
             Education & <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Journey</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
-        </div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+        </motion.div>
 
         <div className="relative">
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#00d4ff] via-[#0066ff] to-transparent" />
@@ -1053,24 +1083,25 @@ const EducationTimeline: FC = () => {
             >
               <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] z-10" style={{ border: '4px solid var(--bg-primary)' }} />
 
-              <div
-                className={`ml-12 md:ml-0 md:w-[45%] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'
-                  } transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${index % 2 === 0 ? '-translate-x-5' : 'translate-x-5'}`
-                  }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+              <motion.div
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`ml-12 md:ml-0 md:w-[45%] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}
               >
                 <div
-                  className="p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-[1.02]"
-                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', boxShadow: '0 4px 24px var(--shadow-color)' }}
+                  className="p-6 rounded-2xl glass transition-all duration-300 hover:scale-[1.02]"
+                  style={{ boxShadow: '0 8px 32px var(--shadow-color)' }}
                 >
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#00d4ff]/20 to-[#0066ff]/20 text-[#00d4ff] mb-3">
+                  <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-[#00d4ff]/20 to-[#0066ff]/20 text-[#00d4ff] mb-4 border border-[#00d4ff]/20">
                     {item.date}
                   </span>
-                  <h3 className="text-lg font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                  <p className="text-sm text-[#00b4d8] mb-2">{item.institution}</p>
-                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>{item.description}</p>
+                  <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
+                  <p className="text-sm font-medium text-[#00b4d8] mb-3">{item.institution}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{item.description}</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           ))}
         </div>
@@ -1123,8 +1154,6 @@ const SkillBar: FC<SkillBarProps> = ({ name, percentage, delay, isVisible }) => 
 // ============================================
 
 const SkillsSection: FC = () => {
-  const [ref, isVisible] = useIntersectionObserver();
-
   const skillCategories: { id: keyof SkillCategory; title: string }[] = [
     { id: 'programming', title: '💻 Programming Languages' },
     { id: 'robotics', title: '🤖 Robotics & Embedded' },
@@ -1132,34 +1161,42 @@ const SkillsSection: FC = () => {
   ];
 
   return (
-    <section id="skills" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
+    <section id="skills" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Technical <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Skills</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
-        </div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {skillCategories.map((category, catIndex) => (
-            <div
+            <motion.div
               key={category.id}
-              className={`p-6 rounded-2xl backdrop-blur-sm transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-                }`}
-              style={{ transitionDelay: `${catIndex * 150}ms`, background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: catIndex * 0.15, duration: 0.6 }}
+              className="p-8 rounded-3xl glass"
+              style={{ boxShadow: '0 8px 32px var(--shadow-color)' }}
             >
-              <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--text-primary)' }}>{category.title}</h3>
+              <h3 className="text-xl font-bold mb-8" style={{ color: 'var(--text-primary)' }}>{category.title}</h3>
               {SKILLS_DATA[category.id].map((skill, skillIndex) => (
                 <SkillBar
                   key={skill.name}
                   name={skill.name}
                   percentage={skill.percentage}
                   delay={catIndex * 150 + skillIndex * 100}
-                  isVisible={isVisible}
+                  isVisible={true}
                 />
               ))}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -1174,81 +1211,82 @@ const SkillsSection: FC = () => {
 interface ProjectCardProps {
   project: Project;
   index: number;
-  isVisible: boolean;
 }
 
-const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
+const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
   return (
-    <div
-      className={`group relative rounded-2xl overflow-hidden backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lg ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-        }`}
-      style={{ transitionDelay: `${index * 100}ms`, background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -10 }}
+      className="group relative rounded-3xl overflow-hidden glass hover-lift"
     >
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-56 overflow-hidden">
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t to-transparent" style={{ background: 'linear-gradient(to top, var(--bg-primary), transparent)' }} />
+        <div className="absolute inset-0 bg-gradient-to-t to-transparent" style={{ background: 'linear-gradient(to top, var(--bg-primary) 5%, transparent 90%)' }} />
 
         {project.featured && (
-          <div className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white">
+          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg">
             🔌 Featured
           </div>
         )}
 
-        <div className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm capitalize" style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>
+        <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold glass capitalize">
           {project.category === 'exhibition' ? '🚀 Exhibit' : project.category}
         </div>
       </div>
 
-      <div className="p-6">
-        <h3 className="text-lg font-bold mb-2 transition-colors" style={{ color: 'var(--text-primary)' }}>
+      <div className="p-8">
+        <h3 className="text-2xl font-bold mb-3 transition-colors group-hover:text-[#00d4ff]" style={{ color: 'var(--text-primary)' }}>
           {project.title}
         </h3>
-        <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{project.description}</p>
+        <p className="text-sm mb-6 line-clamp-2 leading-relaxed" style={{ color: 'var(--text-muted)' }}>{project.description}</p>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-8">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 rounded-md text-xs"
-              style={{ background: 'var(--badge-bg)', color: 'var(--text-muted)' }}
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold"
+              style={{ background: 'var(--badge-bg)', color: 'var(--text-primary)' }}
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           {project.github && (
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-10 h-10 rounded-lg transition-all"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
+              className="flex items-center justify-center w-12 h-12 rounded-xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-glow)] glass"
               aria-label="View on GitHub"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
               </svg>
             </a>
           )}
           <button
-            className="flex items-center justify-center w-10 h-10 rounded-lg transition-all"
-            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
+            className="flex items-center justify-center w-12 h-12 rounded-xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-glow)] glass group relative overflow-hidden"
             aria-label="View details"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] opacity-0 group-hover:opacity-10 transition-opacity" />
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -1258,14 +1296,13 @@ const ProjectCard: FC<ProjectCardProps> = ({ project, index, isVisible }) => {
 
 const ProjectsSection: FC = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const [ref, isVisible] = useIntersectionObserver();
 
   const filteredProjects = activeFilter === 'all'
     ? PROJECTS_DATA
     : PROJECTS_DATA.filter(p => p.category === activeFilter);
 
   return (
-    <section id="projects" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
+    <section id="projects" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-2">
@@ -1291,13 +1328,12 @@ const ProjectsSection: FC = () => {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               project={project}
               index={index}
-              isVisible={isVisible}
             />
           ))}
         </div>
@@ -1311,7 +1347,6 @@ const ProjectsSection: FC = () => {
 // ============================================
 
 const ContactSection: FC = () => {
-  const [ref, isVisible] = useIntersectionObserver();
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
@@ -1340,19 +1375,26 @@ const ContactSection: FC = () => {
   ];
 
   return (
-    <section id="contact" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
+    <section id="contact" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Get In <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Touch</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
-        </div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          <div
-            className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-              }`}
+        <div className="grid md:grid-cols-2 gap-16">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
             <p className="mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               I'm always excited to collaborate on interesting projects, discuss new ideas,
@@ -1412,18 +1454,17 @@ const ContactSection: FC = () => {
                 style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
                 aria-label="Twitter"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <div
-            className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-              }`}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 glass p-8 rounded-3xl" style={{ boxShadow: '0 8px 32px var(--shadow-color)' }}>
               <div className="relative">
                 <input
                   type="text"
@@ -1517,7 +1558,7 @@ const ContactSection: FC = () => {
                 </div>
               )}
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1526,10 +1567,7 @@ const ContactSection: FC = () => {
 
 // ============================================
 // COMPONENT: GallerySection
-// ============================================
-
 const GallerySection: FC = () => {
-  const [ref, isVisible] = useIntersectionObserver();
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [activeFilter, setActiveFilter] = useState('All');
 
@@ -1540,15 +1578,20 @@ const GallerySection: FC = () => {
     : GALLERY_DATA.filter(item => item.category === activeFilter);
 
   return (
-    <section id="gallery" ref={ref as React.RefObject<HTMLElement>} className="py-20 px-4">
+    <section id="gallery" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Photo <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Gallery</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto mb-4" />
-          <p className="max-w-lg mx-auto" style={{ color: 'var(--text-muted)' }}>Featured moments from events, projects, and campus life</p>
-        </div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto mb-4" />
+          <p className="max-w-lg mx-auto text-lg" style={{ color: 'var(--text-muted)' }}>Featured moments from events, projects, and campus life</p>
+        </motion.div>
 
         {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
@@ -1556,65 +1599,70 @@ const GallerySection: FC = () => {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === cat
-                ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25'
-                : ''
+              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeFilter === cat
+                ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-[0_0_20px_rgba(0,212,255,0.4)]'
+                : 'glass'
                 }`}
-              style={activeFilter !== cat ? { background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' } : {}}
+              style={activeFilter !== cat ? { color: 'var(--text-secondary)' } : {}}
             >
               {cat}
             </button>
           ))}
         </div>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-          {filteredImages.map((item, index) => (
-            <div
-              key={item.id}
-              className={`break-inside-avoid group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              onClick={() => setSelectedImage(item)}
-            >
-              {/* Image */}
-              <img
-                src={item.src}
-                alt={item.caption}
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
-                loading="lazy"
-              />
+        {/* Masonry Grid with Animation */}
+        <motion.div 
+          layout
+          className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
+        >
+          <AnimatePresence>
+            {filteredImages.map((item) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4 }}
+                className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer hover-lift"
+                onClick={() => setSelectedImage(item)}
+              >
+                {/* Image */}
+                <img
+                  src={item.src}
+                  alt={item.caption}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
 
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-5" style={{ background: 'linear-gradient(to top, var(--bg-primary), rgba(0,0,0,0.2), transparent)' }}>
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 w-fit mb-2">
-                  {item.category}
-                </span>
-                <p className="font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>{item.caption}</p>
-              </div>
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6" style={{ background: 'linear-gradient(to top, var(--bg-primary) 10%, rgba(0,0,0,0.2) 50%, transparent)' }}>
+                  <span className="inline-block px-3 py-1.5 rounded-full text-xs font-bold bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 w-fit mb-3">
+                    {item.category}
+                  </span>
+                  <p className="font-bold text-xl" style={{ color: 'var(--text-primary)' }}>{item.caption}</p>
+                </div>
 
-              {/* Glow Border on Hover */}
-              <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#00d4ff]/40 transition-all duration-300 pointer-events-none" />
-
-              {/* Zoom Icon */}
-              <div className="absolute top-4 right-4 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-50" style={{ background: 'var(--overlay-bg)', border: '1px solid var(--border-color)' }}>
-                <svg className="w-5 h-5 text-[#00d4ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                </svg>
-              </div>
-            </div>
-          ))}
-        </div>
+                {/* Glow Border on Hover */}
+                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-[#00d4ff]/40 transition-all duration-300 pointer-events-none" />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
       {/* Lightbox Modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-[90] flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 backdrop-blur-xl" style={{ background: 'var(--overlay-bg)', animation: 'fadeIn 0.3s ease-out' }} />
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[90] flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            {/* Backdrop */}
+            <div className="absolute inset-0 backdrop-blur-xl" style={{ background: 'var(--overlay-bg)' }} />
 
           {/* Content */}
           <div
@@ -1644,14 +1692,15 @@ const GallerySection: FC = () => {
 
             {/* Caption */}
             <div className="mt-4 text-center">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 mb-2">
+              <span className="inline-block px-3 py-1.5 rounded-full text-xs font-bold bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 mb-2">
                 {selectedImage.category}
               </span>
-              <p className="text-white text-lg font-semibold">{selectedImage.caption}</p>
+              <p className="text-white text-xl font-bold">{selectedImage.caption}</p>
             </div>
           </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
