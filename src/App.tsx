@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { FC, FormEvent, ChangeEvent } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import './App.css';
@@ -55,10 +55,7 @@ interface ProjectFilter {
   label: string;
 }
 
-interface MousePosition {
-  x: number | null;
-  y: number | null;
-}
+
 
 interface ContactInfo {
   icon: string;
@@ -391,11 +388,8 @@ const AnimatedBackground: FC = () => {
   const blobRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    let currentScroll = 0;
-
     const handleScroll = () => {
       const newScroll = window.pageYOffset;
-      currentScroll = newScroll;
 
       blobRefs.current.forEach((blob, index) => {
         if (!blob) return;
