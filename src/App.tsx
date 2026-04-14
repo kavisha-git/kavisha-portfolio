@@ -36,6 +36,7 @@ interface TimelineEntry {
   title: string;
   institution: string;
   description: string;
+  images?: string[];
 }
 
 interface Project {
@@ -86,7 +87,7 @@ const NAV_LINKS: NavLink[] = [
 ];
 
 const TYPEWRITER_ROLES: string[] = [
-  'Computer Engineering Undergraduate',
+  '2nd Year Computer Engineering Undergraduate',
   'Robotics & Embedded Systems Engineer',
   'Computer Vision Developer',
   'Low-Level Systems Programmer',
@@ -94,10 +95,10 @@ const TYPEWRITER_ROLES: string[] = [
 ];
 
 const STATS_DATA: StatData[] = [
-  { icon: '🚀', value: 8, label: 'Major Projects', suffix: '+' },
+  { icon: '🚀', value: 10, label: 'Major Projects', suffix: '+' },
   { icon: '💻', value: 6, label: 'Programming Languages', suffix: '+' },
-  { icon: '🎓', value: 1, label: 'Year at UoP', suffix: 'st' },
-  { icon: '🏆', value: 1, label: 'Conference Exhibits', suffix: '' },
+  { icon: '🎓', value: 2, label: 'Year at UoP', suffix: 'nd' },
+  { icon: '🏆', value: 2, label: 'Conference Exhibits', suffix: '' },
 ];
 
 const SKILLS_DATA: SkillCategory = {
@@ -129,52 +130,70 @@ const SKILLS_DATA: SkillCategory = {
 
 const EDUCATION_TIMELINE: TimelineEntry[] = [
   {
-    date: '2025 – Ongoing',
-    title: '"wedak.lk" – Sri Lankan Job Marketplace',
-    institution: 'University of Peradeniya · 2nd Year Project',
-    description: 'Building a full-stack web platform with job matching system, user profiles, and modern UI. Software Development module project.',
+    date: 'Semester 3 (Ongoing)',
+    title: 'Software Development Project: “Wedak.lk”',
+    institution: 'University of Peradeniya',
+    description: 'Developing a Sri Lankan Job Marketplace Platform with features like job matching, user profiles, and an employer dashboard.',
   },
   {
-    date: '2025',
-    title: 'Techno \'25 – Engineering Exhibition',
-    institution: 'Sri Lanka\'s Largest Engineering Exhibition',
-    description: 'Exhibited the Apollo Guidance Computer project at Techno \'25. Gained experience in public presentation, technical explanation, and team collaboration.',
+    date: 'Semester 3',
+    title: 'ICPC Regional Contest',
+    institution: 'Organizing Committee Member',
+    description: 'Contributed to event coordination and technical/logistical support. Gained exposure to international-level programming contest standards.',
+    images: ['./images/events_carousel/icpc/2.jpeg', './images/events_carousel/icpc/1.jpeg', './images/events_carousel/icpc/3.jpeg', './images/events_carousel/icpc/4.jpeg', './images/events_carousel/icpc/5.jpeg', './images/events_carousel/icpc/6.jpeg', './images/events_carousel/icpc/7.jpeg'],
   },
   {
-    date: '2025',
+    date: 'Semester 3',
+    title: 'MoraXtreme Hackathon',
+    institution: 'Competitor',
+    description: 'Achieved 4th Place out of ~750 teams. Highlighted skills in competitive programming, problem-solving under pressure, and algorithmic thinking.',
+    images: ['./images/events_carousel/moraxtreme/15.jpeg', './images/events_carousel/moraxtreme/6.jpeg', './images/events_carousel/moraxtreme/2.jpeg', './images/events_carousel/moraxtreme/11.jpeg', './images/events_carousel/moraxtreme/4.jpeg', './images/events_carousel/moraxtreme/16.jpeg', './images/events_carousel/moraxtreme/9.jpeg', './images/events_carousel/moraxtreme/13.jpeg', './images/events_carousel/moraxtreme/1.jpeg', './images/events_carousel/moraxtreme/14.jpeg', './images/events_carousel/moraxtreme/5.jpeg', './images/events_carousel/moraxtreme/12.jpeg', './images/events_carousel/moraxtreme/8.jpeg', './images/events_carousel/moraxtreme/3.jpeg', './images/events_carousel/moraxtreme/10.jpeg', './images/events_carousel/moraxtreme/7.jpeg'],
+  },
+  {
+    date: 'Semester 2',
+    title: 'Techno ‘25 Engineering Exhibition',
+    institution: 'Presenter',
+    description: 'Presented engineering projects, gaining valuable public speaking and technical demonstration experience at a major national exhibition.',
+    images: ['./images/events_carousel/techno25/1.jpeg', './images/events_carousel/techno25/2.jpeg', './images/events_carousel/techno25/3.jpeg', './images/events_carousel/techno25/4.jpeg', './images/events_carousel/techno25/5.jpeg'],
+  },
+  {
+    date: 'Semester 2',
     title: 'Apollo Guidance Computer (AGC) System',
     institution: 'University of Peradeniya · Engex \'25 Design Project',
-    description: 'Built an Apollo Guidance Computer inspired embedded system focusing on historical computer architecture and embedded system design.',
+    description: 'Built an Apollo Guidance Computer (AGC) Inspired System, focusing on low-level embedded systems and historical computer architecture.',
+    images: ['./images/events_carousel/agc/1.jpeg', './images/events_carousel/agc/2.jpeg'],
   },
   {
-    date: '2025',
-    title: 'Semester 2 – Advanced Projects',
-    institution: 'University of Peradeniya · Computer Engineering',
-    description: 'Built a 3D Graphics Library and a Mini Compiler using ARM Assembly in CO2010. Gained skills in low-level programming, memory handling, and compiler design.',
+    date: 'Semester 2',
+    title: 'CO2010 – Advanced Projects',
+    institution: 'Computer Engineering Department',
+    description: 'Developed a 3D Graphics Library and a Mini Compiler using ARM Assembly, deepening knowledge of low-level programming and system architecture.',
   },
   {
-    date: '2025',
-    title: 'Department Selection – Computer Engineering',
+    date: 'Semester 2',
+    title: 'Department Selection',
+    institution: 'Faculty of Engineering',
+    description: 'Selected to the highly competitive Computer Engineering Department (100 students in the Peradeniya Intake).',
+    images: ['./images/events_carousel/dept_welcome/1.jpeg', './images/events_carousel/dept_welcome/2.jpeg', './images/events_carousel/dept_welcome/3.jpeg'],
+  },
+  {
+    date: 'Semester 1',
+    title: 'Foundation Projects',
     institution: 'University of Peradeniya',
-    description: 'Selected to the Computer Engineering Department — one of 20 students in the Peradeniya intake.',
-  },
-  {
-    date: '2024',
-    title: 'Semester 1 – Foundation Projects',
-    institution: 'University of Peradeniya · Faculty of Engineering',
-    description: 'Developed a PyGame-based game (CO1010 Programming) and built a Line Following Robot (EE1010 Electrical Engineering). Learned Python, Arduino, sensor integration, and embedded systems basics.',
+    description: 'Developed a PyGame-based simple game and built a Line Following Robot using Arduino and sensors for hardware experience.',
+    images: ['./images/events_carousel/line_follower/1.jpeg', './images/events_carousel/line_follower/2.jpeg', './images/events_carousel/line_follower/3.jpeg', './images/events_carousel/mesh_game/1.jpeg', './images/events_carousel/neurobot/1.jpeg'],
   },
   {
     date: 'Oct 2024',
-    title: 'BSc. Engineering – Computer Engineering',
-    institution: 'University of Peradeniya, Sri Lanka',
-    description: 'Started undergraduate studies at the Faculty of Engineering, pursuing Computer Engineering with focus on embedded systems and robotics.',
+    title: 'Undergraduate Studies Begin',
+    institution: 'Faculty of Engineering',
+    description: 'Started the BSc. Engineering degree at the University of Peradeniya.',
   },
   {
     date: '2023 / 2024',
-    title: 'Advanced Level – Physical Science (3A)',
-    institution: 'Richmond College, Galle',
-    description: 'Achieved 3 A passes in Physical Science stream. Selected to the University of Peradeniya, Faculty of Engineering.',
+    title: 'A/L Phase (Physical Science)',
+    institution: 'Richmond College',
+    description: 'Achieved 3 A passes and was selected to the University of Peradeniya.',
   },
 ];
 
@@ -183,7 +202,7 @@ const PROJECTS_DATA: Project[] = [
     id: 1,
     title: 'Blackbot',
     description: 'Autonomous line-following robot with PID control, obstacle detection, and Bluetooth telemetry. Built for national robotics competition.',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop',
+    image: './images/events_carousel/line_follower/1.jpeg',
     tags: ['Robotics', 'Arduino', 'C++', 'PID'],
     category: 'robotics',
     featured: true,
@@ -194,7 +213,7 @@ const PROJECTS_DATA: Project[] = [
     id: 2,
     title: 'Neurobot',
     description: 'Neural network-powered robotic arm with computer vision for object recognition and grasping. Uses TensorFlow Lite on Raspberry Pi.',
-    image: 'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=600&h=400&fit=crop',
+    image: './images/events_carousel/neurobot/1.jpeg',
     tags: ['Computer Vision', 'Python', 'TensorFlow', 'ROS2'],
     category: 'robotics',
     featured: true,
@@ -205,7 +224,7 @@ const PROJECTS_DATA: Project[] = [
     id: 3,
     title: '3D Engine in C',
     description: 'Software rasterizer from scratch in pure C. Implements matrix transformations, lighting, and texture mapping without graphics libraries.',
-    image: 'https://images.unsplash.com/photo-1614726365723-49cfae927846?w=600&h=400&fit=crop',
+    image: './images/projects/3d_engine_c.png',
     tags: ['C', 'Computer Graphics', 'Math', 'Low-Level'],
     category: 'software',
     featured: false,
@@ -227,7 +246,7 @@ const PROJECTS_DATA: Project[] = [
     id: 5,
     title: 'Pygame Maze Solver',
     description: 'Interactive maze generator and solver with multiple algorithms (BFS, DFS, A*). Visualizes pathfinding in real-time.',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop',
+    image: './images/events_carousel/mesh_game/1.jpeg',
     tags: ['Python', 'Pygame', 'Algorithms', 'AI'],
     category: 'software',
     featured: false,
@@ -238,7 +257,7 @@ const PROJECTS_DATA: Project[] = [
     id: 6,
     title: 'Apollo Exhibit',
     description: 'Interactive space exploration display for TECHNO 2024 conference. Features scale model rockets with LED telemetry simulation.',
-    image: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=400&fit=crop',
+    image: './images/events_carousel/agc/1.jpeg',
     tags: ['Exhibition', 'Electronics', 'Arduino', 'Design'],
     category: 'exhibition',
     featured: true,
@@ -260,13 +279,30 @@ const SKILL_TAGS: string[] = [
   'ROS2', 'Arduino', 'Raspberry Pi', 'ESP32', 'ARM Cortex',
 ];
 
+const FULL_GALLERY_IMAGES: GalleryItem[] = [
+  ...Array.from({length: 5}, (_, i) => ({ id: 100+i, src: `./images/events_carousel/techno25/${i+1}.jpeg`, caption: 'TECHNO 2025 Conference', category: 'Events' })),
+  ...Array.from({length: 7}, (_, i) => ({ id: 200+i, src: `./images/events_carousel/icpc/${i+1}.jpeg`, caption: 'ICPC Regional Contest', category: 'Events' })),
+  ...Array.from({length: 16}, (_, i) => ({ id: 300+i, src: `./images/events_carousel/moraxtreme/${i+1}.jpeg`, caption: 'MoraXtreme Hackathon', category: 'Events' })),
+  { id: 400, src: `./images/events_carousel/neurobot/1.jpeg`, caption: 'Neuro Bot Exhibition', category: 'Robotics' },
+  { id: 401, src: `./images/events_carousel/neurobot/video.mp4`, caption: 'Neuro Bot Exhibition', category: 'Robotics' },
+  ...Array.from({length: 3}, (_, i) => ({ id: 500+i, src: `./images/events_carousel/line_follower/${i+1}.jpeg`, caption: 'Line Following Robot', category: 'Robotics' })),
+  { id: 504, src: `./images/events_carousel/line_follower/video.mp4`, caption: 'Line Following Robot', category: 'Robotics' },
+  ...Array.from({length: 3}, (_, i) => ({ id: 600+i, src: `./images/events_carousel/mesh_game/${i+1}.jpeg`, caption: 'Mesh Game', category: 'Robotics' })),
+  ...Array.from({length: 2}, (_, i) => ({ id: 700+i, src: `./images/events_carousel/agc/${i+1}.jpeg`, caption: 'Apollo Guidance Computer Exhibit', category: 'Projects' })),
+  { id: 703, src: `./images/events_carousel/agc/video.mp4`, caption: 'Apollo Guidance Computer Exhibit', category: 'Projects' },
+  ...Array.from({length: 3}, (_, i) => ({ id: 800+i, src: `./images/events_carousel/dept_welcome/${i+1}.jpeg`, caption: 'Department Welcome', category: 'Campus Life' })),
+  { id: 900, src: './images/profile.jpg', caption: 'Kavisha Kalhara', category: 'Profile' }
+];
+
 const GALLERY_DATA: GalleryItem[] = [
-  { id: 1, src: './images/profile.jpg', caption: 'TECHNO 2025 Conference', category: 'Events' },
-  { id: 2, src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=800&fit=crop', caption: 'Robotics Workshop Session', category: 'Workshops' },
-  { id: 3, src: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop', caption: 'Circuit Board Design', category: 'Projects' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&h=600&fit=crop', caption: 'University of Peradeniya Campus', category: 'Campus Life' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop', caption: 'Blackbot - Line Following Robot', category: 'Projects' },
-  { id: 6, src: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=800&fit=crop', caption: 'Apollo Exhibit at TECHNO', category: 'Events' },
+  { id: 1, src: './images/events/techno25.jpeg', caption: 'TECHNO 2025 Conference', category: 'Events' },
+  { id: 2, src: './images/events/neurobot.jpeg', caption: 'Neuro Bot Exhibition', category: 'Robotics' },
+  { id: 3, src: './images/events/icpc.jpeg', caption: 'ICPC Regional Contest', category: 'Events' },
+  { id: 4, src: './images/events/dept_welcome.jpeg', caption: 'Department Welcome', category: 'Campus Life' },
+  { id: 5, src: './images/events/line_follower.jpeg', caption: 'Line Following Robot', category: 'Robotics' },
+  { id: 6, src: './images/events/agc.jpeg', caption: 'Apollo Guidance Computer Exhibit', category: 'Projects' },
+  { id: 7, src: './images/profile.jpg', caption: 'Kavisha Kalhara', category: 'Profile' },
+  { id: 8, src: './images/events/moraxtreme.jpeg', caption: 'MoraXtreme Hackathon', category: 'Events' },
 ];
 
 const SOCIAL_LINKS = [
@@ -1039,7 +1075,7 @@ const AboutSection: FC = () => (
 
             {/* Quick Info Pills */}
             <div className="flex flex-wrap justify-center gap-3">
-              {[{ icon: '📍', text: 'Sri Lanka' }, { icon: '🎓', text: 'Year 1' }, { icon: '💼', text: 'Open to Internships' }].map((pill) => (
+              {[{ icon: '📍', text: 'Sri Lanka' }, { icon: '🎓', text: '2nd Year' }, { icon: '💼', text: 'Open to Internships' }].map((pill) => (
                 <div key={pill.text} className="flex items-center gap-2 px-4 py-2 rounded-full glass">
                   <span>{pill.icon}</span>
                   <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{pill.text}</span>
@@ -1112,6 +1148,18 @@ const EducationTimeline: FC = () => (
                 <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
                 <p className="text-sm font-medium mb-3" style={{ color: '#818cf8' }}>{item.institution}</p>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{item.description}</p>
+                {item.images && item.images.length > 0 && (
+                  <div className="mt-5 relative w-full">
+                    <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory" style={{ scrollbarWidth: 'thin', scrollbarColor: '#a855f7 transparent' }}>
+                      {item.images.map((imgSrc, imgIdx) => (
+                        <div key={imgIdx} className="flex-none w-64 h-48 rounded-2xl overflow-hidden border border-white/10 shadow-lg relative snap-center group/img">
+                          <img src={imgSrc} alt={`${item.title} - ${imgIdx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>
@@ -1382,11 +1430,29 @@ const ProjectsSection: FC = () => {
 // ============================================
 
 const GallerySection: FC = () => {
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [selectedEventTitle, setSelectedEventTitle] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [activeFilter, setActiveFilter] = useState('All');
 
   const categories = ['All', ...Array.from(new Set(GALLERY_DATA.map(item => item.category)))];
   const filteredImages = activeFilter === 'All' ? GALLERY_DATA : GALLERY_DATA.filter(item => item.category === activeFilter);
+
+  const lightboxImages = FULL_GALLERY_IMAGES.filter(img => img.caption === selectedEventTitle);
+
+  const handleOpen = (item: GalleryItem) => {
+    setSelectedEventTitle(item.caption);
+    setLightboxIndex(0);
+  };
+
+  const handleNext = (e: any) => {
+    e.stopPropagation();
+    setLightboxIndex((prev) => (prev + 1) % lightboxImages.length);
+  };
+
+  const handlePrev = (e: any) => {
+    e.stopPropagation();
+    setLightboxIndex((prev) => (prev - 1 + lightboxImages.length) % lightboxImages.length);
+  };
 
   return (
     <section id="gallery" className="py-24 px-4 relative z-10">
@@ -1438,7 +1504,7 @@ const GallerySection: FC = () => {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.4 }}
                 className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer hover-lift"
-                onClick={() => setSelectedImage(item)}
+                onClick={() => handleOpen(item)}
               >
                 <img
                   src={item.src}
@@ -1467,40 +1533,64 @@ const GallerySection: FC = () => {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage && (
+        {selectedEventTitle && lightboxImages.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[90] flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
+            onClick={() => setSelectedEventTitle(null)}
           >
             <div className="absolute inset-0 backdrop-blur-xl" style={{ background: 'var(--overlay-bg)' }} />
             <div
-              className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center"
+              className="relative max-w-5xl w-full flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
-              style={{ animation: 'scaleIn 0.3s ease-out' }}
+              style={{ animation: 'scaleIn 0.3s ease-out', maxHeight: '90vh' }}
             >
               <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute -top-12 right-0 w-10 h-10 rounded-full glass flex items-center justify-center transition-all z-10"
+                onClick={() => setSelectedEventTitle(null)}
+                className="absolute -top-12 right-0 md:-right-12 w-10 h-10 rounded-full glass flex items-center justify-center transition-all z-10 hover:scale-110"
                 style={{ color: 'var(--text-secondary)' }}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10">
-                <img src={selectedImage.src} alt={selectedImage.caption} className="max-w-full max-h-[75vh] object-contain" />
+
+              {lightboxImages.length > 1 && (
+                <>
+                  <button onClick={handlePrev} className="absolute left-[-1rem] md:-left-16 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full glass flex items-center justify-center transition-all z-10 hover:scale-110" style={{ color: 'var(--text-primary)' }}>
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                  </button>
+                  <button onClick={handleNext} className="absolute right-[-1rem] md:-right-16 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full glass flex items-center justify-center transition-all z-10 hover:scale-110" style={{ color: 'var(--text-primary)' }}>
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </button>
+                </>
+              )}
+
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/10 flex items-center justify-center bg-black/40 border border-white/5" style={{ height: '75vh', width: '100%' }}>
+                {lightboxImages[lightboxIndex].src.endsWith('.mp4') ? (
+                  <video src={lightboxImages[lightboxIndex].src} controls autoPlay className="max-w-full max-h-full object-contain" />
+                ) : (
+                  <img src={lightboxImages[lightboxIndex].src} alt={lightboxImages[lightboxIndex].caption} className="max-w-full max-h-full object-contain" />
+                )}
               </div>
-              <div className="mt-4 text-center">
+              
+              <div className="mt-6 text-center">
                 <span
-                  className="inline-block px-3 py-1.5 rounded-full text-xs font-bold mb-2"
-                  style={{ background: 'rgba(168, 85, 247, 0.2)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)' }}
+                  className="inline-block px-4 py-1.5 rounded-full text-xs font-bold mb-3 tracking-widest uppercase"
+                  style={{ background: 'rgba(168, 85, 247, 0.15)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)' }}
                 >
-                  {selectedImage.category}
+                  {lightboxImages[lightboxIndex].category}
                 </span>
-                <p className="text-white text-xl font-bold">{selectedImage.caption}</p>
+                <p className="text-white text-2xl font-bold flex items-center justify-center gap-3">
+                  <span>{lightboxImages[lightboxIndex].caption}</span>
+                  {lightboxImages.length > 1 && (
+                    <span className="text-sm font-semibold opacity-60" style={{ color: 'var(--text-muted)' }}>
+                      ({lightboxIndex + 1} / {lightboxImages.length})
+                    </span>
+                  )}
+                </p>
               </div>
             </div>
           </motion.div>
@@ -1877,3 +1967,7 @@ const App: FC = () => {
 };
 
 export default App;
+
+
+
+
