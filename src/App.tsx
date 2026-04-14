@@ -22,6 +22,7 @@ interface StatData {
 interface Skill {
   name: string;
   percentage: number;
+  icon: string;
 }
 
 interface SkillCategory {
@@ -54,14 +55,6 @@ interface ProjectFilter {
   label: string;
 }
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-}
-
 interface MousePosition {
   x: number | null;
   y: number | null;
@@ -72,6 +65,13 @@ interface ContactInfo {
   label: string;
   value: string;
   href: string;
+}
+
+interface GalleryItem {
+  id: number;
+  src: string;
+  caption: string;
+  category: string;
 }
 
 // ============================================
@@ -105,79 +105,79 @@ const STATS_DATA: StatData[] = [
 
 const SKILLS_DATA: SkillCategory = {
   programming: [
-    { name: 'C / C++', percentage: 90 },
-    { name: 'Python', percentage: 85 },
-    { name: 'JavaScript', percentage: 80 },
-    { name: 'Assembly (ARM)', percentage: 75 },
-    { name: 'MATLAB', percentage: 70 },
-    { name: 'Verilog HDL', percentage: 65 },
+    { name: 'C / C++', percentage: 90, icon: '⚡' },
+    { name: 'Python', percentage: 85, icon: '🐍' },
+    { name: 'JavaScript', percentage: 80, icon: '🌐' },
+    { name: 'Assembly (ARM)', percentage: 75, icon: '🔩' },
+    { name: 'MATLAB', percentage: 70, icon: '📊' },
+    { name: 'Verilog HDL', percentage: 65, icon: '🔲' },
   ],
   robotics: [
-    { name: 'Arduino', percentage: 95 },
-    { name: 'Raspberry Pi', percentage: 90 },
-    { name: 'ROS2', percentage: 75 },
-    { name: 'ESP32', percentage: 85 },
-    { name: 'Motor Control', percentage: 80 },
-    { name: 'Sensor Integration', percentage: 85 },
+    { name: 'Arduino', percentage: 95, icon: '🤖' },
+    { name: 'Raspberry Pi', percentage: 90, icon: '🍓' },
+    { name: 'ROS2', percentage: 75, icon: '🦾' },
+    { name: 'ESP32', percentage: 85, icon: '📡' },
+    { name: 'Motor Control', percentage: 80, icon: '⚙️' },
+    { name: 'Sensor Integration', percentage: 85, icon: '🔬' },
   ],
   tools: [
-    { name: 'Git & GitHub', percentage: 90 },
-    { name: 'Linux', percentage: 85 },
-    { name: 'Docker', percentage: 70 },
-    { name: 'KiCad', percentage: 80 },
-    { name: 'OpenCV', percentage: 85 },
-    { name: 'TensorFlow', percentage: 75 },
+    { name: 'Git & GitHub', percentage: 90, icon: '🔀' },
+    { name: 'Linux', percentage: 85, icon: '🐧' },
+    { name: 'Docker', percentage: 70, icon: '🐳' },
+    { name: 'KiCad', percentage: 80, icon: '📐' },
+    { name: 'OpenCV', percentage: 85, icon: '👁️' },
+    { name: 'TensorFlow', percentage: 75, icon: '🧠' },
   ],
 };
 
 const EDUCATION_TIMELINE: TimelineEntry[] = [
   {
-    date: '2024 - Present',
-    title: 'BSc. Engineering (Hons) in Computer Engineering',
+    date: '2025 – Ongoing',
+    title: '"wedak.lk" – Sri Lankan Job Marketplace',
+    institution: 'University of Peradeniya · 2nd Year Project',
+    description: 'Building a full-stack web platform with job matching system, user profiles, and modern UI. Software Development module project.',
+  },
+  {
+    date: '2025',
+    title: 'Techno \'25 – Engineering Exhibition',
+    institution: 'Sri Lanka\'s Largest Engineering Exhibition',
+    description: 'Exhibited the Apollo Guidance Computer project at Techno \'25. Gained experience in public presentation, technical explanation, and team collaboration.',
+  },
+  {
+    date: '2025',
+    title: 'Apollo Guidance Computer (AGC) System',
+    institution: 'University of Peradeniya · Engex \'25 Design Project',
+    description: 'Built an Apollo Guidance Computer inspired embedded system focusing on historical computer architecture and embedded system design.',
+  },
+  {
+    date: '2025',
+    title: 'Semester 2 – Advanced Projects',
+    institution: 'University of Peradeniya · Computer Engineering',
+    description: 'Built a 3D Graphics Library and a Mini Compiler using ARM Assembly in CO2010. Gained skills in low-level programming, memory handling, and compiler design.',
+  },
+  {
+    date: '2025',
+    title: 'Department Selection – Computer Engineering',
+    institution: 'University of Peradeniya',
+    description: 'Selected to the Computer Engineering Department — one of 20 students in the Peradeniya intake.',
+  },
+  {
+    date: '2024',
+    title: 'Semester 1 – Foundation Projects',
+    institution: 'University of Peradeniya · Faculty of Engineering',
+    description: 'Developed a PyGame-based game (CO1010 Programming) and built a Line Following Robot (EE1010 Electrical Engineering). Learned Python, Arduino, sensor integration, and embedded systems basics.',
+  },
+  {
+    date: 'Oct 2024',
+    title: 'BSc. Engineering – Computer Engineering',
     institution: 'University of Peradeniya, Sri Lanka',
-    description: 'Pursuing undergraduate studies with focus on embedded systems, computer architecture, and robotics. Active member of the Engineering Society and Robotics Club.',
+    description: 'Started undergraduate studies at the Faculty of Engineering, pursuing Computer Engineering with focus on embedded systems and robotics.',
   },
   {
-    date: '2023',
-    title: 'Advanced Level (Physical Science)',
-    institution: 'Royal College, Colombo',
-    description: 'Achieved 3A passes in Physics, Chemistry, and Combined Mathematics. Ranked in top 1% nationally.',
-  },
-  {
-    date: '2020',
-    title: 'Ordinary Level Examination',
-    institution: 'Royal College, Colombo',
-    description: 'Secured 9A passes including Mathematics, Science, and ICT. Received academic excellence award.',
-  },
-  {
-    date: '2019',
-    title: 'Introduction to Robotics',
-    institution: 'STEM Academy, Colombo',
-    description: 'Completed foundational course in robotics engineering covering sensors, actuators, and basic control systems.',
-  },
-  {
-    date: '2018',
-    title: 'Programming Fundamentals',
-    institution: 'Online Certification',
-    description: 'Learned C programming basics through Harvard CS50 online course. Built first console applications.',
-  },
-  {
-    date: '2017',
-    title: 'Arduino Workshop Series',
-    institution: 'IEEE Student Branch',
-    description: 'Hands-on training in microcontroller programming and basic circuit design.',
-  },
-  {
-    date: '2016',
-    title: 'Mathematics Olympiad Training',
-    institution: 'Sri Lanka Mathematics Olympiad',
-    description: 'Participated in national mathematics competition training program.',
-  },
-  {
-    date: '2015',
-    title: 'School Science Exhibition Winner',
-    institution: 'Royal College, Colombo',
-    description: 'First place in junior category for automated plant watering system project.',
+    date: '2023 / 2024',
+    title: 'Advanced Level – Physical Science (3A)',
+    institution: 'Richmond College, Galle',
+    description: 'Achieved 3 A passes in Physical Science stream. Selected to the University of Peradeniya, Faculty of Engineering.',
   },
 ];
 
@@ -251,7 +251,7 @@ const PROJECTS_DATA: Project[] = [
 ];
 
 const PROJECT_FILTERS: ProjectFilter[] = [
-  { id: 'all', label: 'All' },
+  { id: 'all', label: 'All Projects' },
   { id: 'robotics', label: 'Robotics' },
   { id: 'software', label: 'Software' },
   { id: 'exhibition', label: 'Exhibition' },
@@ -263,77 +263,24 @@ const SKILL_TAGS: string[] = [
   'ROS2', 'Arduino', 'Raspberry Pi', 'ESP32', 'ARM Cortex',
 ];
 
-interface GalleryItem {
-  id: number;
-  src: string;
-  caption: string;
-  category: string;
-}
-
 const GALLERY_DATA: GalleryItem[] = [
-  {
-    id: 1,
-    src: './images/profile.jpg',
-    caption: 'TECHNO 2025 Conference',
-    category: 'Events',
-  },
-  {
-    id: 2,
-    src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=800&fit=crop',
-    caption: 'Robotics Workshop Session',
-    category: 'Workshops',
-  },
-  {
-    id: 3,
-    src: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop',
-    caption: 'Circuit Board Design',
-    category: 'Projects',
-  },
-  {
-    id: 4,
-    src: 'https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&h=600&fit=crop',
-    caption: 'University of Peradeniya Campus',
-    category: 'Campus Life',
-  },
-  {
-    id: 5,
-    src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop',
-    caption: 'Blackbot - Line Following Robot',
-    category: 'Projects',
-  },
-  {
-    id: 6,
-    src: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=800&fit=crop',
-    caption: 'Apollo Exhibit at TECHNO',
-    category: 'Events',
-  },
+  { id: 1, src: './images/profile.jpg', caption: 'TECHNO 2025 Conference', category: 'Events' },
+  { id: 2, src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&h=800&fit=crop', caption: 'Robotics Workshop Session', category: 'Workshops' },
+  { id: 3, src: 'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&h=400&fit=crop', caption: 'Circuit Board Design', category: 'Projects' },
+  { id: 4, src: 'https://images.unsplash.com/photo-1562408590-e32931084e23?w=600&h=600&fit=crop', caption: 'University of Peradeniya Campus', category: 'Campus Life' },
+  { id: 5, src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop', caption: 'Blackbot - Line Following Robot', category: 'Projects' },
+  { id: 6, src: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=800&fit=crop', caption: 'Apollo Exhibit at TECHNO', category: 'Events' },
+];
+
+const SOCIAL_LINKS = [
+  { icon: 'github', href: 'https://github.com/kavisha-git', label: 'GitHub' },
+  { icon: 'linkedin', href: 'https://www.linkedin.com/in/kavisha-kalhara-b4102b326', label: 'LinkedIn' },
+  { icon: 'twitter', href: 'https://twitter.com', label: 'X / Twitter' },
 ];
 
 // ============================================
 // UTILITY HOOKS
 // ============================================
-
-const useIntersectionObserver = (options: IntersectionObserverInit = {}): [React.RefObject<HTMLElement | null>, boolean] => {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsIntersecting(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.1, ...options });
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [options]);
-
-  return [ref, isIntersecting];
-};
 
 const useScrollPosition = (): number => {
   const [scrollY, setScrollY] = useState(0);
@@ -366,29 +313,45 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ onComplete }) => {
           clearInterval(interval);
           setTimeout(() => {
             setIsFading(true);
-            setTimeout(onComplete, 500);
+            setTimeout(onComplete, 600);
           }, 300);
           return 100;
         }
-        return prev + 4;
+        return prev + 3;
       });
-    }, 80);
+    }, 60);
 
     return () => clearInterval(interval);
   }, [onComplete]);
 
   return (
-    <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center transition-opacity duration-500`}
-      style={{ background: 'var(--bg-primary)' }}
-    >
-      <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center transition-opacity duration-500 ${isFading ? 'opacity-0' : 'opacity-100'}`}>
-        <div className="relative">
-          {/* Animated gradient ring */}
-          <div className="w-32 h-32 rounded-full border-4 border-transparent border-t-[#00d4ff] border-r-[#0066ff] animate-spin" />
+    <div className="fixed inset-0 z-[100]" style={{ background: 'var(--bg-primary)' }}>
+      <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center transition-opacity duration-600 ${isFading ? 'opacity-0' : 'opacity-100'}`}>
+        {/* Animated rings */}
+        <div className="relative w-36 h-36">
           <div
-            className="absolute inset-0 w-32 h-32 rounded-full border-4 border-transparent border-b-[#00d4ff] border-l-[#0066ff] animate-spin"
-            style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}
+            className="absolute inset-0 rounded-full border-2 border-transparent animate-spin"
+            style={{
+              borderTopColor: '#a855f7',
+              borderRightColor: '#6366f1',
+              animationDuration: '1.2s',
+            }}
+          />
+          <div
+            className="absolute inset-2 rounded-full border-2 border-transparent animate-spin"
+            style={{
+              borderBottomColor: '#06b6d4',
+              borderLeftColor: '#a855f7',
+              animationDirection: 'reverse',
+              animationDuration: '1.8s',
+            }}
+          />
+          <div
+            className="absolute inset-4 rounded-full border border-transparent animate-spin"
+            style={{
+              borderTopColor: '#818cf8',
+              animationDuration: '2.4s',
+            }}
           />
           {/* Logo */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -399,159 +362,80 @@ const LoadingScreen: FC<LoadingScreenProps> = ({ onComplete }) => {
             />
           </div>
         </div>
-        <p className="mt-8 text-sm tracking-widest uppercase animate-pulse" style={{ color: 'var(--text-muted)' }}>
-          Initialising Portfolio…
+
+        <p className="mt-8 text-sm tracking-[0.3em] uppercase font-medium" style={{ color: 'var(--text-muted)' }}>
+          Loading Portfolio
         </p>
-        <div className="mt-4 w-48 h-1 rounded-full overflow-hidden" style={{ background: 'var(--bg-secondary)' }}>
+
+        {/* Progress bar */}
+        <div className="mt-4 w-56 h-[3px] rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
           <div
-            className="h-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] transition-all duration-100"
-            style={{ width: `${progress}%` }}
+            className="h-full rounded-full transition-all duration-100"
+            style={{
+              width: `${progress}%`,
+              background: 'linear-gradient(90deg, #a855f7, #6366f1, #06b6d4)',
+            }}
           />
         </div>
+        <p className="mt-2 text-xs font-mono" style={{ color: 'var(--text-faint)' }}>{progress}%</p>
       </div>
     </div>
   );
 };
 
 // ============================================
-// COMPONENT: ParticleCanvas
+// COMPONENT: AnimatedBackground
 // ============================================
 
-interface ParticleCanvasProps {
-  isDark: boolean;
-}
+const AnimatedBackground: FC = () => {
+  const blobRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-const ParticleCanvas: FC<ParticleCanvasProps> = ({ isDark }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const mouseRef = useRef<MousePosition>({ x: null, y: null });
+  useEffect(() => {
+    let currentScroll = 0;
 
-  const initParticles = useCallback((width: number, height: number): Particle[] => {
-    const particles: Particle[] = [];
-    const particleCount = Math.min(80, Math.floor((width * height) / 15000));
+    const handleScroll = () => {
+      const newScroll = window.pageYOffset;
+      currentScroll = newScroll;
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 1,
+      blobRefs.current.forEach((blob, index) => {
+        if (!blob) return;
+        const xOffset = Math.sin(newScroll / 120 + index * 0.7) * 280;
+        const yOffset = Math.cos(newScroll / 120 + index * 0.7) * 50;
+        blob.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        blob.style.transition = 'transform 1.4s ease-out';
       });
-    }
-    return particles;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    let animationFrameId: number;
-
-    const animate = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      const particles = particlesRef.current;
-      const mouse = mouseRef.current;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const particleColor = isDark ? 'rgba(0, 212, 255, 0.6)' : 'rgba(0, 102, 255, 0.5)';
-      const lineColor = isDark ? 'rgba(0, 212, 255, 0.15)' : 'rgba(0, 102, 255, 0.1)';
-
-      particles.forEach((particle, i) => {
-        if (mouse.x !== null && mouse.y !== null) {
-          const dx = particle.x - mouse.x;
-          const dy = particle.y - mouse.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100 && distance > 0) {
-            const force = (100 - distance) / 100;
-            particle.vx += (dx / distance) * force * 0.5;
-            particle.vy += (dy / distance) * force * 0.5;
-          }
-        }
-
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.vx *= 0.99;
-        particle.vy *= 0.99;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
-
-        particle.x = Math.max(0, Math.min(canvas.width, particle.x));
-        particle.y = Math.max(0, Math.min(canvas.height, particle.y));
-
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = particleColor;
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particle.x - particles[j].x;
-          const dy = particle.y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = lineColor;
-            ctx.lineWidth = 1 - distance / 120;
-            ctx.stroke();
-          }
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-       cancelAnimationFrame(animationFrameId);
-    };
-  }, [isDark]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      particlesRef.current = initParticles(canvas.width, canvas.height);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: null, y: null };
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [initParticles]);
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.8 }}
-    />
+    <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      {/* Blobs */}
+      <div
+        ref={el => { blobRefs.current[0] = el; }}
+        className="blob blob-purple"
+        style={{ width: '28rem', height: '28rem', top: '-6rem', left: '-6rem' }}
+      />
+      <div
+        ref={el => { blobRefs.current[1] = el; }}
+        className="blob blob-cyan hidden sm:block"
+        style={{ width: '24rem', height: '24rem', top: '-4rem', right: '-4rem' }}
+      />
+      <div
+        ref={el => { blobRefs.current[2] = el; }}
+        className="blob blob-blue"
+        style={{ width: '24rem', height: '24rem', bottom: '-8rem', left: '10%' }}
+      />
+      <div
+        ref={el => { blobRefs.current[3] = el; }}
+        className="blob blob-indigo hidden sm:block"
+        style={{ width: '20rem', height: '20rem', bottom: '-6rem', right: '15%', opacity: 0.2 }}
+      />
+      {/* Grid overlay */}
+      <div className="absolute inset-0 bg-grid" />
+    </div>
   );
 };
 
@@ -568,16 +452,20 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigate }) => {
   const scrollY = useScrollPosition();
-  const isScrolled = scrollY > 80;
+  const isScrolled = scrollY > 60;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? 'backdrop-blur-xl border-b'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+        ? 'backdrop-blur-2xl border-b shadow-lg'
         : 'bg-transparent'
         }`}
-      style={isScrolled ? { background: 'var(--bg-nav)', borderColor: 'var(--border-color)' } : {}}
+      style={isScrolled ? {
+        background: 'var(--bg-nav)',
+        borderColor: 'var(--border-color)',
+        boxShadow: '0 4px 30px rgba(0,0,0,0.3)',
+      } : {}}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -589,9 +477,9 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
             <img
               src="./images/logo.png"
               alt="KRK Logo"
-              className="w-10 h-10 object-contain rounded-lg"
+              className="w-9 h-9 object-contain rounded-lg"
             />
-            <span className="hidden sm:block text-lg font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">
+            <span className="hidden sm:block text-lg font-bold gradient-text">
               Kavisha Kalhara
             </span>
           </button>
@@ -602,34 +490,38 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
               <button
                 key={link.id}
                 onClick={() => onNavigate(link.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 relative ${activeSection === link.id
-                  ? 'text-[#00d4ff]'
-                  : ''
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:text-white ${activeSection === link.id ? '' : ''
                   }`}
-                style={activeSection !== link.id ? { color: 'var(--text-muted)' } : {}}
+                style={{
+                  color: activeSection === link.id ? '#c084fc' : 'var(--text-muted)',
+                }}
               >
                 {link.label}
                 {activeSection === link.id && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full" />
+                  <motion.span
+                    layoutId="nav-indicator"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full"
+                    style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
                 )}
               </button>
             ))}
           </div>
 
-          {/* Right side controls */}
+          {/* Right side */}
           <div className="flex items-center space-x-3">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl transition-all duration-300 hover:scale-110"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+              className="p-2.5 rounded-xl transition-all duration-300 hover:scale-110 glass"
               aria-label="Toggle theme"
             >
               {isDark ? (
-                <svg className="w-5 h-5 text-[#00d4ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" style={{ color: '#c084fc' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               ) : (
-                <svg className="w-5 h-5 text-[#0066ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" style={{ color: '#6366f1' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
               )}
@@ -638,8 +530,7 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
             {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2.5 rounded-xl transition-all duration-300"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+              className="md:hidden p-2.5 rounded-xl glass transition-all duration-300"
               aria-label="Toggle menu"
             >
               <svg className="w-5 h-5" style={{ color: 'var(--text-primary)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -653,29 +544,32 @@ const Navbar: FC<NavbarProps> = ({ isDark, toggleTheme, activeSection, onNavigat
           </div>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
-        {mobileOpen && (
-          <div
-            className="md:hidden py-4 border-t backdrop-blur-xl rounded-b-2xl"
-            style={{ borderColor: 'var(--border-color)', background: 'var(--bg-nav)' }}
-          >
-            <div className="flex flex-col space-y-1">
-              {NAV_LINKS.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => { onNavigate(link.id); setMobileOpen(false); }}
-                  className={`px-4 py-3 rounded-xl text-sm font-medium text-left transition-all duration-300 ${activeSection === link.id
-                    ? 'text-[#00d4ff] bg-[#00d4ff]/10'
-                    : ''
-                    }`}
-                  style={activeSection !== link.id ? { color: 'var(--text-secondary)' } : {}}
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden overflow-hidden border-t"
+              style={{ borderColor: 'var(--border-color)' }}
+            >
+              <div className="py-4 flex flex-col space-y-1" style={{ background: 'var(--bg-nav)' }}>
+                {NAV_LINKS.map((link) => (
+                  <button
+                    key={link.id}
+                    onClick={() => { onNavigate(link.id); setMobileOpen(false); }}
+                    className={`px-4 py-3 rounded-xl text-sm font-medium text-left transition-all duration-300 ${activeSection === link.id ? 'bg-purple-500/10' : ''
+                      }`}
+                    style={{ color: activeSection === link.id ? '#c084fc' : 'var(--text-secondary)' }}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
@@ -700,7 +594,6 @@ const Typewriter: FC<TypewriterProps> = ({ texts, speed = 100, deleteSpeed = 50,
 
   useEffect(() => {
     const currentText = texts[textIndex];
-
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (index < currentText.length) {
@@ -726,7 +619,7 @@ const Typewriter: FC<TypewriterProps> = ({ texts, speed = 100, deleteSpeed = 50,
   return (
     <span className="inline">
       {displayText}
-      <span className="animate-pulse text-[#00d4ff]">|</span>
+      <span className="animate-pulse" style={{ color: '#a855f7' }}>|</span>
     </span>
   );
 };
@@ -743,34 +636,69 @@ interface AnimatedCounterProps {
 
 const AnimatedCounter: FC<AnimatedCounterProps> = ({ value, suffix = '', duration = 2000 }) => {
   const [count, setCount] = useState(0);
-  const [ref, isVisible] = useIntersectionObserver();
+  const ref = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (isVisible && !hasAnimated.current) {
       hasAnimated.current = true;
       const startTime = Date.now();
-
       const animate = () => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeOut = 1 - Math.pow(1 - progress, 3);
         setCount(Math.floor(easeOut * value));
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
+        if (progress < 1) requestAnimationFrame(animate);
       };
-
       requestAnimationFrame(animate);
     }
   }, [isVisible, value, duration]);
 
-  return (
-    <span ref={ref as React.RefObject<HTMLSpanElement>}>
-      {count}{suffix}
-    </span>
-  );
+  return <span ref={ref}>{count}{suffix}</span>;
+};
+
+// ============================================
+// SVG Icons
+// ============================================
+
+const GitHubIcon: FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+  </svg>
+);
+
+const LinkedInIcon: FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+  </svg>
+);
+
+const XIcon: FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const SocialIcon: FC<{ icon: string; className?: string }> = ({ icon, className }) => {
+  switch (icon) {
+    case 'github': return <GitHubIcon className={className} />;
+    case 'linkedin': return <LinkedInIcon className={className} />;
+    case 'twitter': return <XIcon className={className} />;
+    default: return null;
+  }
 };
 
 // ============================================
@@ -784,95 +712,184 @@ interface HeroSectionProps {
 const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const opacity = useTransform(scrollY, [0, 350], [1, 0]);
+
+  const techChips = ['C/C++', 'Python', 'Arduino', 'ROS2', 'OpenCV', 'Raspberry Pi'];
 
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col items-center justify-center relative px-4 pt-16 overflow-hidden"
+      className="min-h-screen flex items-center relative px-4 pt-20 pb-16 overflow-hidden"
     >
       <motion.div
         style={{ y: y1, opacity }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="text-center max-w-4xl mx-auto z-10"
+        className="max-w-7xl mx-auto w-full z-10"
       >
-        {/* University Badge with Logo */}
-        <div
-          className="inline-flex items-center gap-3 px-5 py-3 rounded-full backdrop-blur-sm mb-8"
-          style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/120px-University_of_Peradeniya_Crest.svg.png"
-            alt="University of Peradeniya"
-            className="w-8 h-8 object-contain"
-          />
-          <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>University of Peradeniya · Sri Lanka</span>
-        </div>
-
-        {/* Main Logo */}
-        <div className="mb-8 flex justify-center">
-          <img
-            src="./images/logo.png"
-            alt="Kavisha Rashmika Kalhara"
-            className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-[0_0_30px_rgba(0,212,255,0.3)]"
-          />
-        </div>
-
-        {/* Name */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-          <span className="bg-gradient-to-r from-[#00d4ff] via-[#00b4d8] to-[#0077b6] bg-clip-text text-transparent">
-            Kavisha Rashmika Kalhara
-          </span>
-        </h1>
-
-        {/* Typewriter */}
-        <p className="text-lg sm:text-xl mb-10 h-8" style={{ color: 'var(--text-muted)' }}>
-          <Typewriter texts={TYPEWRITER_ROLES} speed={80} deleteSpeed={40} pause={1500} />
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <button
-            onClick={() => onNavigate('projects')}
-            className="group px-8 py-3 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white font-medium hover:shadow-lg hover:shadow-[#00d4ff]/25 transition-all duration-300 flex items-center gap-2"
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Column - Text */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <span>View Projects</span>
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
+            {/* University Badge */}
+            <div
+              className="inline-flex items-center gap-3 px-4 py-2.5 rounded-full mb-8 glass"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/120px-University_of_Peradeniya_Crest.svg.png"
+                alt="University of Peradeniya"
+                className="w-7 h-7 object-contain"
+              />
+              <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                University of Peradeniya · Sri Lanka
+              </span>
+            </div>
 
-          <button
-            className="group px-8 py-3 rounded-full font-medium transition-all duration-300 flex items-center gap-2"
-            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
-          >
-            <span>📄</span>
-            <span>Resume</span>
-          </button>
+            {/* Name */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-4 leading-[1.1]">
+              <span style={{ color: 'var(--text-primary)' }}>Hi, I'm </span>
+              <br />
+              <span className="gradient-text-animated">
+                Kavisha Kalhara
+              </span>
+            </h1>
 
-          <button
-            onClick={() => onNavigate('contact')}
-            className="group px-8 py-3 rounded-full border border-[#00d4ff]/50 text-[#00d4ff] font-medium hover:bg-[#00d4ff]/10 transition-all duration-300"
+            {/* Typewriter */}
+            <div className="text-lg sm:text-xl mb-6 h-8 font-medium" style={{ color: 'var(--text-muted)' }}>
+              <Typewriter texts={TYPEWRITER_ROLES} speed={80} deleteSpeed={40} pause={1500} />
+            </div>
+
+            {/* Description */}
+            <p className="text-base mb-8 max-w-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              I focus on creating innovative solutions in robotics, embedded systems,
+              and computer vision — bringing ideas to life through both code and circuits.
+            </p>
+
+            {/* Tech Chips */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {techChips.map((chip) => (
+                <span
+                  key={chip}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold glass transition-all duration-300 hover:border-purple-500/40"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {chip}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+              <button
+                onClick={() => onNavigate('projects')}
+                className="group px-7 py-3 rounded-full text-white font-semibold transition-all duration-300 flex items-center gap-2 hover:shadow-xl hover:shadow-purple-500/20 hover:scale-105"
+                style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1)' }}
+              >
+                <span>View Projects</span>
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+
+              <button
+                className="group px-7 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 glass hover:border-purple-500/30"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                <span>📄</span>
+                <span>Download CV</span>
+              </button>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-3">
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.icon}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-11 h-11 rounded-xl flex items-center justify-center glass transition-all duration-300 hover:border-purple-500/40 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/10"
+                  style={{ color: 'var(--text-muted)' }}
+                  aria-label={social.label}
+                >
+                  <SocialIcon icon={social.icon} className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right Column - Illustration */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+            className="hidden lg:flex justify-center items-center relative"
           >
-            Contact Me
-          </button>
+            <div className="relative w-full max-w-md">
+              {/* Glow ring */}
+              <div
+                className="absolute inset-0 rounded-full blur-3xl opacity-20"
+                style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1, #06b6d4)' }}
+              />
+              {/* Profile image with gradient border */}
+              <div className="relative">
+                <div
+                  className="w-80 h-80 mx-auto rounded-full p-1"
+                  style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1, #06b6d4)' }}
+                >
+                  <div className="w-full h-full rounded-full overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
+                    <img
+                      src="./images/profile.jpg"
+                      alt="Kavisha Kalhara"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Floating tech badges */}
+                <motion.div
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+                  className="absolute top-8 -right-4 px-3 py-2 rounded-xl glass text-sm font-semibold"
+                  style={{ color: '#c084fc' }}
+                >
+                  🤖 Robotics
+                </motion.div>
+                <motion.div
+                  animate={{ y: [0, 12, 0] }}
+                  transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut', delay: 0.5 }}
+                  className="absolute bottom-12 -left-6 px-3 py-2 rounded-xl glass text-sm font-semibold"
+                  style={{ color: '#818cf8' }}
+                >
+                  ⚡ C/C++
+                </motion.div>
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut', delay: 1 }}
+                  className="absolute bottom-4 -right-2 px-3 py-2 rounded-xl glass text-sm font-semibold"
+                  style={{ color: '#22d3ee' }}
+                >
+                  👁️ OpenCV
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </motion.div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
         >
-          <svg className="w-8 h-8 text-[#00d4ff] opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-7 h-7 opacity-50" style={{ color: '#a855f7' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </motion.div>
@@ -885,230 +902,230 @@ const HeroSection: FC<HeroSectionProps> = ({ onNavigate }) => {
 // COMPONENT: StatsBar
 // ============================================
 
-const StatsBar: FC = () => {
-  return (
-    <section className="py-16 px-4 relative z-10">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {STATS_DATA.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.05, translateY: -5 }}
-              className="group relative p-6 rounded-2xl glass overflow-hidden"
-              style={{
-                boxShadow: '0 8px 32px var(--shadow-color)',
-              }}
-            >
-              <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#00d4ff] to-[#0066ff] opacity-50" />
-
-              <div className="text-3xl mb-2">{stat.icon}</div>
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent mb-1">
-                <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-              </div>
-              <div className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
+const StatsBar: FC = () => (
+  <section className="py-16 px-4 relative z-10">
+    <div className="max-w-6xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        {STATS_DATA.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="group relative p-6 rounded-2xl glass card-glow overflow-hidden"
+          >
+            {/* Top accent line */}
+            <div
+              className="absolute top-0 left-4 right-4 h-px opacity-40"
+              style={{ background: 'linear-gradient(90deg, transparent, #a855f7, #6366f1, transparent)' }}
+            />
+            <div className="text-3xl mb-2">{stat.icon}</div>
+            <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">
+              <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+            </div>
+            <div className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
+          </motion.div>
+        ))}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 // ============================================
 // COMPONENT: AboutSection
 // ============================================
 
-const AboutSection: FC = () => {
-  return (
-    <section id="about" className="py-24 px-4 relative">
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+const AboutSection: FC = () => (
+  <section id="about" className="py-24 px-4 relative">
+    <div className="max-w-6xl mx-auto relative z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+          About <span className="gradient-text">Me</span>
+        </h2>
+        <div className="w-24 h-1 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }} />
+        <p className="mt-4 text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-muted)' }}>
+          Transforming ideas into intelligent systems
+        </p>
+      </motion.div>
+
+      <div className="grid md:grid-cols-2 gap-16 items-center">
+        {/* Left Column - Text */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] to-[#0066ff]">Me</span>
-          </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+          <div className="space-y-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            <p>
+              I'm a passionate Computer Engineering undergraduate at the University of Peradeniya,
+              driven by a fascination for how hardware and software converge to create intelligent systems.
+            </p>
+            <p>
+              My journey into technology began at a young age, tinkering with Arduino boards and
+              writing my first lines of C code. Today, I'm deeply invested in robotics, embedded systems,
+              and computer vision — fields where I can bring ideas to life through both code and circuits.
+            </p>
+            <p>
+              I believe in learning by building. Every project is an opportunity to push boundaries,
+              whether it's optimizing a PID controller for a line-following robot or implementing a
+              3D graphics engine from scratch.
+            </p>
+            <p>
+              When I'm not debugging code or soldering PCBs, you'll find me contributing to open-source
+              projects, mentoring junior students, or exploring the latest advancements in AI and robotics.
+            </p>
+          </div>
+
+          {/* Skill Tags */}
+          <div className="mt-8">
+            <h3 className="text-sm font-semibold mb-4 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Expertise</h3>
+            <div className="flex flex-wrap gap-2">
+              {SKILL_TAGS.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1.5 rounded-full text-sm glass transition-all duration-300 cursor-default hover:border-purple-500/40"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left Column */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="space-y-4 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              <p>
-                I'm a passionate Computer Engineering undergraduate at the University of Peradeniya,
-                driven by a fascination for how hardware and software converge to create intelligent systems.
-              </p>
-              <p>
-                My journey into technology began at a young age, tinkering with Arduino boards and
-                writing my first lines of C code. Today, I'm deeply invested in robotics, embedded systems,
-                and computer vision — fields where I can bring ideas to life through both code and circuits.
-              </p>
-              <p>
-                I believe in learning by building. Every project is an opportunity to push boundaries,
-                whether it's optimizing a PID controller for a line-following robot or implementing a
-                3D graphics engine from scratch.
-              </p>
-              <p>
-                When I'm not debugging code or soldering PCBs, you'll find me contributing to open-source
-                projects, mentoring junior students, or exploring the latest advancements in AI and robotics.
-              </p>
-            </div>
-
-            {/* Skill Tags */}
-            <div className="mt-8">
-              <h3 className="text-sm font-medium mb-4 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Expertise</h3>
-              <div className="flex flex-wrap gap-2">
-                {SKILL_TAGS.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-full text-sm hover:border-[#00d4ff]/50 hover:text-[#00d4ff] transition-all duration-300 cursor-default"
-                    style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Profile Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div
-              className="relative p-8 rounded-3xl glass"
-              style={{ boxShadow: '0 20px 40px var(--shadow-color)' }}
-            >
-              {/* Profile Photo */}
-              <div className="flex justify-center mb-6">
-                <div className="relative">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] animate-pulse blur-md" />
-                  <div className="relative w-32 h-32 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] p-1">
-                    <div className="w-full h-full rounded-full overflow-hidden">
-                      <img
-                        src="./images/profile.jpg"
-                        alt="Kavisha Kalhara"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Kavisha Kalhara</h3>
-                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Computer Engineering Undergraduate</p>
-              </div>
-
-              {/* University Badge */}
-              <div className="flex justify-center mb-6">
+        {/* Right Column - Profile Card */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="relative p-8 rounded-3xl glass card-glow">
+            {/* Profile Photo */}
+            <div className="flex justify-center mb-6">
+              <div className="relative">
                 <div
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+                  className="absolute inset-0 rounded-full blur-xl opacity-30"
+                  style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1)' }}
+                />
+                <div
+                  className="relative w-32 h-32 rounded-full p-1"
+                  style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1, #06b6d4)' }}
                 >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/40px-University_of_Peradeniya_Crest.svg.png"
-                    alt="UoP"
-                    className="w-6 h-6 object-contain"
-                  />
-                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>University of Peradeniya</span>
+                  <div className="w-full h-full rounded-full overflow-hidden">
+                    <img src="./images/profile.jpg" alt="Kavisha Kalhara" className="w-full h-full object-cover" />
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Quick Info Pills */}
-              <div className="flex flex-wrap justify-center gap-3">
-                {[{ icon: '📍', text: 'Sri Lanka' }, { icon: '🎓', text: 'Year 1' }, { icon: '💼', text: 'Open to Internships' }].map((pill) => (
-                  <div
-                    key={pill.text}
-                    className="flex items-center gap-2 px-4 py-2 rounded-full"
-                    style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
-                  >
-                    <span>{pill.icon}</span>
-                    <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{pill.text}</span>
-                  </div>
-                ))}
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-primary)' }}>Kavisha Kalhara</h3>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Computer Engineering Undergraduate</p>
+            </div>
+
+            {/* University Badge */}
+            <div className="flex justify-center mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/University_of_Peradeniya_Crest.svg/40px-University_of_Peradeniya_Crest.svg.png"
+                  alt="UoP" className="w-6 h-6 object-contain"
+                />
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>University of Peradeniya</span>
               </div>
             </div>
-          </motion.div>
-        </div>
+
+            {/* Quick Info Pills */}
+            <div className="flex flex-wrap justify-center gap-3">
+              {[{ icon: '📍', text: 'Sri Lanka' }, { icon: '🎓', text: 'Year 1' }, { icon: '💼', text: 'Open to Internships' }].map((pill) => (
+                <div key={pill.text} className="flex items-center gap-2 px-4 py-2 rounded-full glass">
+                  <span>{pill.icon}</span>
+                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{pill.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 // ============================================
 // COMPONENT: EducationTimeline
 // ============================================
 
-const EducationTimeline: FC = () => {
-  return (
-    <section id="education" className="py-24 px-4 relative">
-      <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-            Education & <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Journey</span>
-          </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
-        </motion.div>
+const EducationTimeline: FC = () => (
+  <section id="education" className="py-24 px-4 relative">
+    <div className="max-w-4xl mx-auto relative z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+          Education & <span className="gradient-text">Journey</span>
+        </h2>
+        <div className="w-24 h-1 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }} />
+      </motion.div>
 
-        <div className="relative">
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#00d4ff] via-[#0066ff] to-transparent" />
+      <div className="relative">
+        <div
+          className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px"
+          style={{ background: 'linear-gradient(to bottom, #a855f7, #6366f1, transparent)' }}
+        />
 
-          {EDUCATION_TIMELINE.map((item, index) => (
+        {EDUCATION_TIMELINE.map((item, index) => (
+          <div
+            key={index}
+            className={`relative flex items-start mb-8 md:mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+          >
             <div
-              key={index}
-              className={`relative flex items-start mb-8 md:mb-12 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-            >
-              <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] z-10" style={{ border: '4px solid var(--bg-primary)' }} />
+              className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full z-10"
+              style={{
+                background: 'linear-gradient(135deg, #a855f7, #6366f1)',
+                border: '4px solid var(--bg-primary)',
+              }}
+            />
 
-              <motion.div
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`ml-12 md:ml-0 md:w-[45%] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}
-              >
-                <div
-                  className="p-6 rounded-2xl glass transition-all duration-300 hover:scale-[1.02]"
-                  style={{ boxShadow: '0 8px 32px var(--shadow-color)' }}
+            <motion.div
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className={`ml-12 md:ml-0 md:w-[45%] ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}
+            >
+              <div className="p-6 rounded-2xl glass card-glow transition-all duration-300 hover:scale-[1.02]">
+                <span
+                  className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold mb-4"
+                  style={{
+                    background: 'rgba(168, 85, 247, 0.12)',
+                    color: '#c084fc',
+                    border: '1px solid rgba(168, 85, 247, 0.2)',
+                  }}
                 >
-                  <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-[#00d4ff]/20 to-[#0066ff]/20 text-[#00d4ff] mb-4 border border-[#00d4ff]/20">
-                    {item.date}
-                  </span>
-                  <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
-                  <p className="text-sm font-medium text-[#00b4d8] mb-3">{item.institution}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{item.description}</p>
-                </div>
-              </motion.div>
-            </div>
-          ))}
-        </div>
+                  {item.date}
+                </span>
+                <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{item.title}</h3>
+                <p className="text-sm font-medium mb-3" style={{ color: '#818cf8' }}>{item.institution}</p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{item.description}</p>
+              </div>
+            </motion.div>
+          </div>
+        ))}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 // ============================================
 // COMPONENT: SkillBar
@@ -1117,32 +1134,38 @@ const EducationTimeline: FC = () => {
 interface SkillBarProps {
   name: string;
   percentage: number;
+  icon: string;
   delay: number;
   isVisible: boolean;
 }
 
-const SkillBar: FC<SkillBarProps> = ({ name, percentage, delay, isVisible }) => {
+const SkillBar: FC<SkillBarProps> = ({ name, percentage, icon, delay, isVisible }) => {
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
     if (isVisible) {
-      const timer = setTimeout(() => {
-        setWidth(percentage);
-      }, delay);
+      const timer = setTimeout(() => setWidth(percentage), delay);
       return () => clearTimeout(timer);
     }
   }, [isVisible, percentage, delay]);
 
   return (
-    <div className="mb-4">
+    <div className="mb-5">
       <div className="flex justify-between mb-2">
-        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{name}</span>
-        <span className="text-sm text-[#00d4ff]">{percentage}%</span>
+        <span className="text-sm flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
+          <span className="text-base">{icon}</span>
+          {name}
+        </span>
+        <span className="text-sm font-mono font-semibold" style={{ color: '#c084fc' }}>{percentage}%</span>
       </div>
-      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-card)' }}>
+      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] transition-all duration-1000 ease-out"
-          style={{ width: `${width}%`, transitionDelay: `${delay}ms` }}
+          className="h-full rounded-full transition-all duration-1000 ease-out"
+          style={{
+            width: `${width}%`,
+            background: 'linear-gradient(90deg, #a855f7, #6366f1, #06b6d4)',
+            transitionDelay: `${delay}ms`,
+          }}
         />
       </div>
     </div>
@@ -1154,25 +1177,25 @@ const SkillBar: FC<SkillBarProps> = ({ name, percentage, delay, isVisible }) => 
 // ============================================
 
 const SkillsSection: FC = () => {
-  const skillCategories: { id: keyof SkillCategory; title: string }[] = [
-    { id: 'programming', title: '💻 Programming Languages' },
-    { id: 'robotics', title: '🤖 Robotics & Embedded' },
-    { id: 'tools', title: '🔧 Tools & Platforms' },
+  const skillCategories: { id: keyof SkillCategory; title: string; icon: string }[] = [
+    { id: 'programming', title: 'Programming Languages', icon: '💻' },
+    { id: 'robotics', title: 'Robotics & Embedded', icon: '🤖' },
+    { id: 'tools', title: 'Tools & Platforms', icon: '🔧' },
   ];
 
   return (
     <section id="skills" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Technical <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Skills</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            Technical <span className="gradient-text">Skills</span>
           </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+          <div className="w-24 h-1 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }} />
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -1183,15 +1206,18 @@ const SkillsSection: FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: catIndex * 0.15, duration: 0.6 }}
-              className="p-8 rounded-3xl glass"
-              style={{ boxShadow: '0 8px 32px var(--shadow-color)' }}
+              className="p-8 rounded-3xl glass card-glow"
             >
-              <h3 className="text-xl font-bold mb-8" style={{ color: 'var(--text-primary)' }}>{category.title}</h3>
+              <h3 className="text-xl font-bold mb-8 flex items-center gap-3" style={{ color: 'var(--text-primary)' }}>
+                <span className="text-2xl">{category.icon}</span>
+                {category.title}
+              </h3>
               {SKILLS_DATA[category.id].map((skill, skillIndex) => (
                 <SkillBar
                   key={skill.name}
                   name={skill.name}
                   percentage={skill.percentage}
+                  icon={skill.icon}
                   delay={catIndex * 150 + skillIndex * 100}
                   isVisible={true}
                 />
@@ -1213,82 +1239,84 @@ interface ProjectCardProps {
   index: number;
 }
 
-const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -10 }}
-      className="group relative rounded-3xl overflow-hidden glass hover-lift"
-    >
-      <div className="relative h-56 overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t to-transparent" style={{ background: 'linear-gradient(to top, var(--bg-primary) 5%, transparent 90%)' }} />
+const ProjectCard: FC<ProjectCardProps> = ({ project, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-50px' }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    className="group relative rounded-3xl overflow-hidden glass card-glow"
+  >
+    <div className="relative h-56 overflow-hidden">
+      <img
+        src={project.image}
+        alt={project.title}
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(to top, var(--bg-primary) 5%, transparent 90%)' }}
+      />
 
-        {project.featured && (
-          <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg">
-            🔌 Featured
-          </div>
-        )}
-
-        <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold glass capitalize">
-          {project.category === 'exhibition' ? '🚀 Exhibit' : project.category}
+      {project.featured && (
+        <div
+          className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg"
+          style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1)' }}
+        >
+          ⭐ Featured
         </div>
+      )}
+
+      <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-bold glass capitalize" style={{ color: 'var(--text-secondary)' }}>
+        {project.category}
       </div>
+    </div>
 
-      <div className="p-8">
-        <h3 className="text-2xl font-bold mb-3 transition-colors group-hover:text-[#00d4ff]" style={{ color: 'var(--text-primary)' }}>
-          {project.title}
-        </h3>
-        <p className="text-sm mb-6 line-clamp-2 leading-relaxed" style={{ color: 'var(--text-muted)' }}>{project.description}</p>
+    <div className="p-7">
+      <h3 className="text-2xl font-bold mb-3 transition-colors group-hover:text-purple-400" style={{ color: 'var(--text-primary)' }}>
+        {project.title}
+      </h3>
+      <p className="text-sm mb-6 line-clamp-2 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        {project.description}
+      </p>
 
-        <div className="flex flex-wrap gap-2 mb-8">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold"
-              style={{ background: 'var(--badge-bg)', color: 'var(--text-primary)' }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="flex gap-4">
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-12 h-12 rounded-xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-glow)] glass"
-              aria-label="View on GitHub"
-            >
-              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-            </a>
-          )}
-          <button
-            className="flex items-center justify-center w-12 h-12 rounded-xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-[var(--accent-glow)] glass group relative overflow-hidden"
-            aria-label="View details"
+      <div className="flex flex-wrap gap-2 mb-6">
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="px-3 py-1.5 rounded-lg text-xs font-semibold"
+            style={{ background: 'var(--badge-bg)', color: '#c084fc' }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] opacity-0 group-hover:opacity-10 transition-opacity" />
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-          </button>
-        </div>
+            {tag}
+          </span>
+        ))}
       </div>
-    </motion.div>
-  );
-};
+
+      <div className="flex gap-3">
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center w-11 h-11 rounded-xl glass transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-500/30"
+            aria-label="View on GitHub"
+          >
+            <GitHubIcon className="w-5 h-5" />
+          </a>
+        )}
+        <button
+          className="flex items-center justify-center w-11 h-11 rounded-xl glass transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10 hover:border-purple-500/30"
+          aria-label="View details"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </motion.div>
+);
 
 // ============================================
 // COMPONENT: ProjectsSection
@@ -1304,12 +1332,17 @@ const ProjectsSection: FC = () => {
   return (
     <section id="projects" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">
-            Featured <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Projects</span>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-8"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            Featured <span className="gradient-text">Projects</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto mb-8" />
-        </div>
+          <div className="w-24 h-1 rounded-full mx-auto mb-8" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }} />
+        </motion.div>
 
         {/* Filter Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -1317,27 +1350,168 @@ const ProjectsSection: FC = () => {
             <button
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${activeFilter === filter.id
-                ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white'
-                : ''
+              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${activeFilter === filter.id
+                ? 'text-white shadow-lg shadow-purple-500/20'
+                : 'glass'
                 }`}
-              style={activeFilter !== filter.id ? { background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' } : {}}
+              style={activeFilter === filter.id
+                ? { background: 'linear-gradient(135deg, #a855f7, #6366f1)' }
+                : { color: 'var(--text-muted)' }
+              }
             >
               {filter.label}
             </button>
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-            />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </section>
+  );
+};
+
+// ============================================
+// COMPONENT: GallerySection
+// ============================================
+
+const GallerySection: FC = () => {
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  const categories = ['All', ...Array.from(new Set(GALLERY_DATA.map(item => item.category)))];
+  const filteredImages = activeFilter === 'All' ? GALLERY_DATA : GALLERY_DATA.filter(item => item.category === activeFilter);
+
+  return (
+    <section id="gallery" className="py-24 px-4 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            Photo <span className="gradient-text">Gallery</span>
+          </h2>
+          <div className="w-24 h-1 rounded-full mx-auto mb-4" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }} />
+          <p className="max-w-lg mx-auto text-lg" style={{ color: 'var(--text-muted)' }}>
+            Featured moments from events, projects, and campus life
+          </p>
+        </motion.div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveFilter(cat)}
+              className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeFilter === cat
+                ? 'text-white shadow-lg shadow-purple-500/20'
+                : 'glass'
+                }`}
+              style={activeFilter === cat
+                ? { background: 'linear-gradient(135deg, #a855f7, #6366f1)' }
+                : { color: 'var(--text-secondary)' }
+              }
+            >
+              {cat}
+            </button>
           ))}
         </div>
+
+        {/* Masonry Grid */}
+        <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+          <AnimatePresence>
+            {filteredImages.map((item) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4 }}
+                className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer hover-lift"
+                onClick={() => setSelectedImage(item)}
+              >
+                <img
+                  src={item.src}
+                  alt={item.caption}
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6"
+                  style={{ background: 'linear-gradient(to top, var(--bg-primary) 10%, rgba(0,0,0,0.2) 50%, transparent)' }}
+                >
+                  <span
+                    className="inline-block px-3 py-1.5 rounded-full text-xs font-bold w-fit mb-3"
+                    style={{ background: 'rgba(168, 85, 247, 0.2)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)' }}
+                  >
+                    {item.category}
+                  </span>
+                  <p className="font-bold text-xl" style={{ color: 'var(--text-primary)' }}>{item.caption}</p>
+                </div>
+                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-purple-500/30 transition-all duration-300 pointer-events-none" />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[90] flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="absolute inset-0 backdrop-blur-xl" style={{ background: 'var(--overlay-bg)' }} />
+            <div
+              className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+              style={{ animation: 'scaleIn 0.3s ease-out' }}
+            >
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-12 right-0 w-10 h-10 rounded-full glass flex items-center justify-center transition-all z-10"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10">
+                <img src={selectedImage.src} alt={selectedImage.caption} className="max-w-full max-h-[75vh] object-contain" />
+              </div>
+              <div className="mt-4 text-center">
+                <span
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-bold mb-2"
+                  style={{ background: 'rgba(168, 85, 247, 0.2)', color: '#c084fc', border: '1px solid rgba(168, 85, 247, 0.3)' }}
+                >
+                  {selectedImage.category}
+                </span>
+                <p className="text-white text-xl font-bold">{selectedImage.caption}</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
@@ -1346,22 +1520,48 @@ const ProjectsSection: FC = () => {
 // COMPONENT: ContactSection
 // ============================================
 
+// ⚠️ REPLACE THIS with your real Web3Forms access key!
+// Get one free at: https://web3forms.com (enter your email → get key in inbox)
+const WEB3FORMS_ACCESS_KEY = '57c2c50a-1cd6-48f4-bea9-f7b0cafa900c';
+
 const ContactSection: FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
 
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          subject: `Portfolio Contact: ${formData.subject}`,
+          message: formData.message,
+          from_name: 'Portfolio Contact Form',
+        }),
+      });
 
-    setIsSubmitting(false);
-    setSubmitStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+      const result = await response.json();
 
-    setTimeout(() => setSubmitStatus(null), 3000);
+      if (result.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -1369,24 +1569,24 @@ const ContactSection: FC = () => {
   };
 
   const contactInfo: ContactInfo[] = [
-    { icon: '📧', label: 'Email', value: 'kavisha.kalhara@eng.pdn.ac.lk', href: 'mailto:kavisha.kalhara@eng.pdn.ac.lk' },
-    { icon: '💼', label: 'LinkedIn', value: 'linkedin.com/in/kavishakalhara', href: 'https://linkedin.com' },
-    { icon: '🐙', label: 'GitHub', value: 'github.com/kavishakalhara', href: 'https://github.com' },
+    { icon: '📧', label: 'Email', value: 'kavishar.kalhara@gmail.com', href: 'mailto:kavishar.kalhara@gmail.com' },
+    { icon: '💼', label: 'LinkedIn', value: 'linkedin.com/in/kavisha-kalhara', href: 'https://www.linkedin.com/in/kavisha-kalhara-b4102b326' },
+    { icon: '🐙', label: 'GitHub', value: 'github.com/kavisha-git', href: 'https://github.com/kavisha-git' },
   ];
 
   return (
     <section id="contact" className="py-24 px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Get In <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Touch</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+            Get In <span className="gradient-text">Touch</span>
           </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto" />
+          <div className="w-24 h-1 rounded-full mx-auto" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)' }} />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-16">
@@ -1409,8 +1609,7 @@ const ContactSection: FC = () => {
                   href={info.href}
                   target={info.href.startsWith('http') ? '_blank' : undefined}
                   rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center gap-4 p-4 rounded-xl transition-all duration-300"
-                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}
+                  className="flex items-center gap-4 p-4 rounded-xl glass card-glow transition-all duration-300"
                 >
                   <span className="text-2xl">{info.icon}</span>
                   <div>
@@ -1422,39 +1621,19 @@ const ContactSection: FC = () => {
             </div>
 
             <div className="flex gap-4">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
-                style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
-                aria-label="GitHub"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                </svg>
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
-                style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
-                aria-label="LinkedIn"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                </svg>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
-                style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
-                aria-label="Twitter"
-              >
-              </a>
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.icon}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 rounded-full flex items-center justify-center glass transition-all hover:border-purple-500/40 hover:scale-110"
+                  style={{ color: 'var(--text-muted)' }}
+                  aria-label={social.label}
+                >
+                  <SocialIcon icon={social.icon} className="w-5 h-5" />
+                </a>
+              ))}
             </div>
           </motion.div>
 
@@ -1464,75 +1643,54 @@ const ContactSection: FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6 glass p-8 rounded-3xl" style={{ boxShadow: '0 8px 32px var(--shadow-color)' }}>
-              <div className="relative">
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors"
-                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
-                  placeholder="Name"
-                />
-                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
-                  Name
-                </label>
-              </div>
+            <form onSubmit={handleSubmit} className="space-y-5 glass p-8 rounded-3xl card-glow">
+              {['name', 'email', 'subject'].map((field) => (
+                <div key={field}>
+                  <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#c084fc' }}>
+                    {field.charAt(0).toUpperCase() + field.slice(1)}
+                  </label>
+                  <input
+                    type={field === 'email' ? 'email' : 'text'}
+                    name={field}
+                    value={formData[field as keyof typeof formData]}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/40 transition-all duration-200"
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: 'var(--text-primary)',
+                    }}
+                    placeholder={`Enter your ${field}`}
+                  />
+                </div>
+              ))}
 
-              <div className="relative">
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors"
-                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
-                  placeholder="Email"
-                />
-                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
-                  Email
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#c084fc' }}>
+                  Message
                 </label>
-              </div>
-
-              <div className="relative">
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors"
-                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
-                  placeholder="Subject"
-                />
-                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
-                  Subject
-                </label>
-              </div>
-
-              <div className="relative">
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
                   rows={4}
-                  className="peer w-full px-4 py-3 rounded-xl placeholder-transparent focus:outline-none transition-colors resize-none"
-                  style={{ background: 'var(--input-bg)', border: '1px solid var(--input-border)', color: 'var(--text-primary)' }}
-                  placeholder="Message"
+                  className="w-full px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500/40 transition-all duration-200 resize-none"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    color: 'var(--text-primary)',
+                  }}
+                  placeholder="Write your message here..."
                 />
-                <label className="absolute left-4 top-3 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1 pointer-events-none floating-label" style={{ color: 'var(--text-muted)' }}>
-                  Message
-                </label>
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white font-medium hover:shadow-lg hover:shadow-[#00d4ff]/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl text-white font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-purple-500/20"
+                style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1)' }}
               >
                 {isSubmitting ? (
                   <>
@@ -1553,9 +1711,25 @@ const ContactSection: FC = () => {
               </button>
 
               {submitStatus === 'success' && (
-                <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-center">
-                  Message sent successfully! I'll get back to you soon.
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-xl text-center"
+                  style={{ background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)', color: '#4ade80' }}
+                >
+                  ✅ Message sent successfully! I'll get back to you soon.
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-xl text-center"
+                  style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171' }}
+                >
+                  ❌ Failed to send message. Please try emailing me directly.
+                </motion.div>
               )}
             </form>
           </motion.div>
@@ -1566,211 +1740,41 @@ const ContactSection: FC = () => {
 };
 
 // ============================================
-// COMPONENT: GallerySection
-const GallerySection: FC = () => {
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  const [activeFilter, setActiveFilter] = useState('All');
-
-  const categories = ['All', ...Array.from(new Set(GALLERY_DATA.map(item => item.category)))];
-
-  const filteredImages = activeFilter === 'All'
-    ? GALLERY_DATA
-    : GALLERY_DATA.filter(item => item.category === activeFilter);
-
-  return (
-    <section id="gallery" className="py-24 px-4 relative z-10">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Photo <span className="bg-gradient-to-r from-[#00d4ff] to-[#0066ff] bg-clip-text text-transparent">Gallery</span>
-          </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-[#00d4ff] to-[#0066ff] rounded-full mx-auto mb-4" />
-          <p className="max-w-lg mx-auto text-lg" style={{ color: 'var(--text-muted)' }}>Featured moments from events, projects, and campus life</p>
-        </motion.div>
-
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveFilter(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${activeFilter === cat
-                ? 'bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-[0_0_20px_rgba(0,212,255,0.4)]'
-                : 'glass'
-                }`}
-              style={activeFilter !== cat ? { color: 'var(--text-secondary)' } : {}}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Masonry Grid with Animation */}
-        <motion.div 
-          layout
-          className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
-        >
-          <AnimatePresence>
-            {filteredImages.map((item) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.4 }}
-                className="break-inside-avoid group relative rounded-3xl overflow-hidden cursor-pointer hover-lift"
-                onClick={() => setSelectedImage(item)}
-              >
-                {/* Image */}
-                <img
-                  src={item.src}
-                  alt={item.caption}
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6" style={{ background: 'linear-gradient(to top, var(--bg-primary) 10%, rgba(0,0,0,0.2) 50%, transparent)' }}>
-                  <span className="inline-block px-3 py-1.5 rounded-full text-xs font-bold bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 w-fit mb-3">
-                    {item.category}
-                  </span>
-                  <p className="font-bold text-xl" style={{ color: 'var(--text-primary)' }}>{item.caption}</p>
-                </div>
-
-                {/* Glow Border on Hover */}
-                <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-[#00d4ff]/40 transition-all duration-300 pointer-events-none" />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            {/* Backdrop */}
-            <div className="absolute inset-0 backdrop-blur-xl" style={{ background: 'var(--overlay-bg)' }} />
-
-          {/* Content */}
-          <div
-            className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-            style={{ animation: 'scaleIn 0.3s ease-out' }}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 w-10 h-10 rounded-full backdrop-blur-sm flex items-center justify-center transition-all z-10"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Image */}
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-[#00d4ff]/10">
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.caption}
-                className="max-w-full max-h-[75vh] object-contain"
-              />
-            </div>
-
-            {/* Caption */}
-            <div className="mt-4 text-center">
-              <span className="inline-block px-3 py-1.5 rounded-full text-xs font-bold bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/30 mb-2">
-                {selectedImage.category}
-              </span>
-              <p className="text-white text-xl font-bold">{selectedImage.caption}</p>
-            </div>
-          </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
-  );
-};
-
-// ============================================
 // COMPONENT: Footer
 // ============================================
 
-const Footer: FC = () => {
-  return (
-    <footer className="py-12 px-4" style={{ borderTop: '1px solid var(--border-color)' }}>
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center">
-          <div className="flex justify-center mb-4">
-            <img
-              src="./images/logo.png"
-              alt="KRK"
-              className="w-12 h-12 object-contain rounded-lg"
-            />
-          </div>
-
-          <p className="mb-6" style={{ color: 'var(--text-muted)' }}>Building the future, one line of code at a time.</p>
-
-          <div className="flex justify-center gap-4 mb-8">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:text-[#00d4ff]"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
-              aria-label="GitHub"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:text-[#00d4ff]"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
-              aria-label="LinkedIn"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-              </svg>
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:text-[#00d4ff]"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-muted)' }}
-              aria-label="Twitter"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-            </a>
-          </div>
-
-          <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
-            © {new Date().getFullYear()} Kavisha Rashmika Kalhara. All rights reserved.
-          </p>
+const Footer: FC = () => (
+  <footer className="py-12 px-4 relative z-10" style={{ borderTop: '1px solid var(--border-color)' }}>
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center">
+        <div className="flex justify-center mb-4">
+          <img src="./images/logo.png" alt="KRK" className="w-12 h-12 object-contain rounded-lg" />
         </div>
+        <p className="mb-6" style={{ color: 'var(--text-muted)' }}>
+          Building the future, one line of code at a time.
+        </p>
+        <div className="flex justify-center gap-4 mb-8">
+          {SOCIAL_LINKS.map((social) => (
+            <a
+              key={social.icon}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full flex items-center justify-center glass transition-all hover:border-purple-500/40 hover:scale-110"
+              style={{ color: 'var(--text-muted)' }}
+              aria-label={social.label}
+            >
+              <SocialIcon icon={social.icon} className="w-5 h-5" />
+            </a>
+          ))}
+        </div>
+        <p className="text-sm" style={{ color: 'var(--text-faint)' }}>
+          © {new Date().getFullYear()} Kavisha Rashmika Kalhara. All rights reserved.
+        </p>
       </div>
-    </footer>
-  );
-};
+    </div>
+  </footer>
+);
 
 // ============================================
 // COMPONENT: ScrollToTop
@@ -1787,11 +1791,12 @@ const ScrollToTop: FC<ScrollToTopProps> = ({ onNavigate }) => {
   return (
     <button
       onClick={() => onNavigate('home')}
-      className={`fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gradient-to-r from-[#00d4ff] to-[#0066ff] text-white shadow-lg shadow-[#00d4ff]/25 transition-all duration-300 flex items-center justify-center z-40 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      className={`fixed bottom-8 right-8 w-12 h-12 rounded-full text-white shadow-lg shadow-purple-500/25 transition-all duration-300 flex items-center justify-center z-40 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
+      style={{ background: 'linear-gradient(135deg, #a855f7, #6366f1)' }}
       aria-label="Scroll to top"
     >
-      <svg className="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
     </button>
@@ -1818,7 +1823,7 @@ const App: FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120; // offset for navbar height
+      const scrollPosition = window.scrollY + 120;
       let currentSection = 'home';
 
       NAV_LINKS.forEach((link) => {
@@ -1835,20 +1840,9 @@ const App: FC = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // run once on mount
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-    document.head.appendChild(link);
-
-    return () => {
-      document.head.removeChild(link);
-    };
   }, []);
 
   if (isLoading) {
@@ -1857,8 +1851,11 @@ const App: FC = () => {
 
   return (
     <div data-theme={isDark ? 'dark' : 'light'}>
-      <div className="min-h-screen transition-colors duration-500" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-        <ParticleCanvas isDark={isDark} />
+      <div
+        className="min-h-screen transition-colors duration-500"
+        style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+      >
+        <AnimatedBackground />
 
         <Navbar
           isDark={isDark}
